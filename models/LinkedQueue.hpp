@@ -4,8 +4,6 @@
 #include <iostream>
 #include "Order.hpp"
 
-using namespace std;
-
 struct NodeQueue {
     Order data;
     NodeQueue* next;
@@ -13,16 +11,17 @@ struct NodeQueue {
 
 class LinkedQueue {
     private:
-        /* data */
+        NodeQueue* head;
+        NodeQueue* tail;
     public:
         LinkedQueue(/* args */);
         ~LinkedQueue();
       
-        int enqueue();
-        int dequeue();
+        void enqueue(Order& order);     // insere um novo elemento no final da fila
+        void dequeue();                 // remove o primeiro elemento da fila
 
-        bool isEmpty();
-        int peek();
+        bool isEmpty() const;           // verifica se a fila está vazia
+        NodeQueue* peek() const;        // retorna o valor do primeiro elemento da fila sem removê-lo
         
 };
 

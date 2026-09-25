@@ -6,22 +6,12 @@
 class Order {
     private:
         int number;
-        String client;
-        String items[100];
+        std::string client;
+        std::string items[100];
         float total;
     public:
         Order(/* args */);
         ~Order();
-        
-        + insert()
-        + insertEnd()
-        + insertIndex()
-        + removeValue()
-        + search()
-        + nextOrder()
-        + previousOrder()
-
-        + isEmpty()
 
 };
 
