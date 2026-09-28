@@ -13,7 +13,7 @@ int main() {
 
     listOrders.insert(order1);
     listOrders.insert(order2);
-    listOrders.insert(order3);
+    listOrders.insertEnd(order3);
 
     listOrders.printList();
 
