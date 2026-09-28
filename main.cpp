@@ -17,5 +17,46 @@ int main() {
 
     listOrders.printList();
 
+    int option;
+    do {
+
+
+        switch (option) {
+        case 1:
+            //menuGerenciarPedido();
+            int option;
+            do {
+                cout << "============= NEW CROSS BURGER ==============" << endl;
+                cout << "| [1] Cadastrar Pedido"; // Iniserir no fim
+                cout << "| [2] Buscar Pedido";
+                cout << "| [3] Cadastrar Pedido";
+                cout << "| [4] Buscar Pedido";
+                cout << "| [0] Sair";
+                cout << "=============================================" << endl;
+                cout << " > Escolha uma opcao: ";
+                cin >> option;
+
+                switch (option) {
+                case 1:
+                    /* code */
+                    break;
+                
+                default:
+                    break;
+                }
+
+            } while (option != 0)
+
+            break;
+        case 2:
+            //menuCadastrarPedido();
+            break;
+        
+        default:
+            break;
+        }
+
+    } while(option != 0)
+
     return 0;
 }

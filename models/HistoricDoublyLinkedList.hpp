@@ -1,5 +1,5 @@
-#ifndef _DOUBLY_LINKED_LIST_
-#define _DOUBLY_LINKED_LIST_
+#ifndef _HISTORIC_DOUBLY_LINKED_LIST_
+#define _HISTORIC_DOUBLY_LINKED_LIST_
 
 #include <iostream>
 #include "Order.hpp"

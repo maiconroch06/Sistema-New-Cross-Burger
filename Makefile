@@ -7,8 +7,8 @@ TARGET = programa
 
 # Listar todos os arquivos .cpp do projeto
 SRCS = main.cpp \
-       service/DoublyLinkedList.cpp \
-       service/LinkedQueue.cpp \
+       service/HistoricDoublyLinkedList.cpp \
+       service/KitchenLinkedQueue.cpp \
        service/LinkedStack.cpp \
        service/Order.cpp \
        view/menus.cpp

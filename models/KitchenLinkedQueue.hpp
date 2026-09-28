@@ -1,5 +1,5 @@
-#ifndef _LINKED_QUEUE_
-#define _LINKED_QUEUE_
+#ifndef _KITCHEN_LINKED_QUEUE_
+#define _KITCHEN_LINKED_QUEUE_
 
 #include <iostream>
 #include "Order.hpp"
