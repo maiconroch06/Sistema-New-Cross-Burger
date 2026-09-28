@@ -79,7 +79,8 @@ int DoublyLinkedList::removeValue(int number) {
             return 0;
         }
         current = current->next;
-
+    }
+    return 0;
 }
 
 // // busca um pedido pelo número do pedido
