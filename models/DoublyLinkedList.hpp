@@ -14,21 +14,23 @@ class DoublyLinkedList {
     private:
         NodeList* head;
         NodeList* tail;
+        
     public:
-        DoublyLinkedList(/* args */);
+        DoublyLinkedList();
         ~DoublyLinkedList();
 
-        void insert(Order& order);          // insere um novo pedido
+        void insert(Order& order);          // insere um novo pedido inserido no início
         void insertEnd(Order& order);       // insere um pedido no final da lista
         void insertIndex(Order& order, int index);  // insere um pedido em uma posição específica da lista
         int removeValue(int number);        // remove um pedido pelo número do pedido
         int search(int number);             // busca um pedido pelo número do pedido
 
-        bool isEmpty() const;   // verifica se a lista está vazia
+        bool isEmpty() const;        // verifica se a lista está vazia
 
-        void nextOrder();       // exibe o proximo pedido
-        void previousOrder();   // exibe o pedido anterior
+        void nextOrder();            // exibe o proximo pedido
+        void previousOrder();        // exibe o pedido anterior
         
+        void printList() const;      // exibe todos os pedidos da lista
 };
 
 #endif
