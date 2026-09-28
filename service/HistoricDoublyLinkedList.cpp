@@ -48,10 +48,56 @@ void HistoricDoublyLinkedList::insertEnd(Order& order) {
 
 }
 
-// // insere um pedido em uma posição específica da lista
-// void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
+// insere um pedido em uma posição específica da lista
+void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
 
-// }
+// O metodo pode ser melhor reutilizando funções já prontas
+
+    if (isEmpty()) {
+        cout << "\n # ERRO: Lista vazia!" << endl;
+        return;
+    }
+
+    NodeList* newNode = new NodeList();
+    newNode->data = order;
+
+    // Caso a posição seja no inicio
+    if (index == 0) {
+        newNode->next = head;
+        head->previous = newNode;
+        head = newNode;
+        return;
+    }
+
+    NodeList* current = head;
+    
+    // Vai percorrer até encontrar a possição de mudança
+    for(int currentCount = 0 ; current != nullptr && currentCount != index ; currentCount++) {
+        current = current->next;
+    }
+    
+    if (current == nullptr) {
+        cerr << "\n # Erro: indice nao encontrado!" << endl;
+        return;
+    }
+
+    // Ele vai assumir a posição do qual o indice foi definido
+
+    // Inserir no meio
+    
+
+    // Inserir no fim
+    if (current == tail) {
+        newNode->next = nullptr;
+        newNode->previous = tail;
+
+        tail->next = newNode;
+        tail = newNode;
+    }
+
+    return;
+
+}
 
 // remove um pedido pelo número do pedido
 int HistoricDoublyLinkedList::removeValue(int number) {
@@ -115,7 +161,7 @@ bool HistoricDoublyLinkedList::isEmpty() const {
 void HistoricDoublyLinkedList::nextOrder() {
     if (isEmpty()) {
         cout << "\n # ERRO: Lista vazia!" << endl;
-        return -1;
+        return;
     }
 
 }
