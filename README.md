@@ -1,6 +1,6 @@
 
 # Windows
-´´´Bash
+´´´Shell
 mingw32-make run
 ´´´
 
