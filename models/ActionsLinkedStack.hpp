@@ -1,5 +1,5 @@
-#ifndef LINKED_STACK_HPP
-#define LINKED_STACK_HPP
+#ifndef _ACTIONS_LINKED_STACK_HPP
+#define _ACTIONS_LINKED_STACK_HPP
 
 #include <iostream>
 #include "Order.hpp"

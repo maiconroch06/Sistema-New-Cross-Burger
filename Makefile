@@ -9,7 +9,7 @@ TARGET = programa
 SRCS = main.cpp \
        service/HistoricDoublyLinkedList.cpp \
        service/KitchenLinkedQueue.cpp \
-       service/LinkedStack.cpp \
+       service/ActionsLinkedStack.cpp \
        service/Order.cpp \
        view/menus.cpp
 
