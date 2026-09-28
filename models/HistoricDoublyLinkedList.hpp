@@ -10,14 +10,14 @@ struct NodeList {
     NodeList* previous;
 };
 
-class DoublyLinkedList {
+class HistoricDoublyLinkedList {
     private:
         NodeList* head;
         NodeList* tail;
         
     public:
-        DoublyLinkedList();
-        ~DoublyLinkedList();
+        HistoricDoublyLinkedList();
+        ~HistoricDoublyLinkedList();
 
         void insert(Order& order);          // insere um novo pedido inserido no início
         void insertEnd(Order& order);       // insere um pedido no final da lista

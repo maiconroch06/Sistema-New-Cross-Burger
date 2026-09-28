@@ -1,11 +1,11 @@
 #include <iostream>
 #include "models/Order.hpp"
-#include "models/DoublyLinkedList.hpp"
+#include "models/HistoricDoublyLinkedList.hpp"
 
 using namespace std;
 
 int main() {
-    DoublyLinkedList listOrders;
+    HistoricDoublyLinkedList listOrders;
 
     Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 25.50f);
     Order order2(2, "Estudante", {"Pizza GG", "Coca Zero", "Sobremesa"}, 68.50f);
@@ -16,7 +16,10 @@ int main() {
     listOrders.insertEnd(order3);
 
     listOrders.printList();
+    NodeList* first = head;
 
+    listOrders.nextOrder(first&);
+    listOrders.previousOrder(first&);
     int option;
     do {
 
@@ -45,7 +48,7 @@ int main() {
                     break;
                 }
 
-            } while (option != 0)
+            } while (option != 0);
 
             break;
         case 2:
@@ -56,7 +59,7 @@ int main() {
             break;
         }
 
-    } while(option != 0)
+    } while(option != 0);
 
     return 0;
 }
