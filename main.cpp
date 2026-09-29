@@ -4,6 +4,10 @@
 
 using namespace std;
 
+int menuPrincipal();
+int menuGerenciarPedido();
+int menuVisualizarHistoricoPedido(HistoricDoublyLinkedList listOrders);
+
 int main() {
     HistoricDoublyLinkedList listOrders;
 
@@ -20,46 +24,105 @@ int main() {
 
     listOrders.nextOrder(first&);
     listOrders.previousOrder(first&);
+    
     int option;
     do {
-
+        // Menu principal
+        option = menuPrincipal();
 
         switch (option) {
         case 1:
-            //menuGerenciarPedido();
+            // Menu de gerenciar pedido
             int option;
-            do {
-                cout << "============= NEW CROSS BURGER ==============" << endl;
-                cout << "| [1] Cadastrar Pedido"; // Iniserir no fim
-                cout << "| [2] Buscar Pedido";
-                cout << "| [3] Cadastrar Pedido";
-                cout << "| [4] Buscar Pedido";
-                cout << "| [0] Sair";
-                cout << "=============================================" << endl;
-                cout << " > Escolha uma opcao: ";
-                cin >> option;
+            option = menuGerenciarPedido();
 
-                switch (option) {
-                case 1:
-                    /* code */
-                    break;
-                
-                default:
-                    break;
-                }
-
-            } while (option != 0);
+            switch (option) {
+            case 1:
+                // Cadastrar Pedido
+                break;
+            case 2:
+                // Buscar Pedido
+                break;
+            case 3:
+                // Atualizar Pedido
+                break;
+            case 4:
+                // Deletar Pedido
+                break;
+            
+            default:
+                cout << "\n # ERRO: Opcao invalida!" << endl;
+                break;
+            }
 
             break;
         case 2:
-            //menuCadastrarPedido();
+            // Menu de visualizar historico de pedido
+            int index = 0;
+            do {
+                option = menuVisualizarHistoricoPedido(listOrders, index);
+            } while(option != 0);
             break;
-        
+        case 3:
+            // Operacoes principais
+            break;
         default:
+            cout << "\n # ERRO: Opcao invalida!" << endl;
             break;
         }
 
     } while(option != 0);
 
     return 0;
+}
+
+int menuPrincipal() {
+    int option;
+    cout << "============= NEW CROSS BURGER =============" << endl;
+    cout << "| [1] Gerenciar Pedido                     |";
+    cout << "| [2] Visualizar Historico de Pedido       |";
+    cout << "| [3] Operacoes Principais                 |";
+    cout << "| [0] Sair                                 |";
+    cout << "============================================" << endl;
+    cout << " > Escolha uma opcao: ";
+    cin >> option;
+    return option;
+}
+
+int menuGerenciarPedido() {
+    int option;
+    cout << "============= NEW CROSS BURGER =============" << endl;
+    cout << "| [1] Cadastrar Pedido                     |"; // Iniserir no fim
+    cout << "| [2] Buscar Pedido                        |";
+    cout << "| [2] Buscar Pedido                        |";
+    cout << "| [3] Atualizar Pedido                     |";
+    cout << "| [4] Deletar Pedido                       |";
+    cout << "| [0] Voltar                               |";
+    cout << "============================================" << endl;
+    cout << " > Escolha uma opcao: ";
+    cin >> option;
+    return option;
+}
+
+int menuVisualizarHistoricoPedido(HistoricDoublyLinkedList listOrders, int index) {
+    int option;
+    cout << "============= NEW CROSS BURGER =============" << endl;
+                        listOrders.search(index);
+    cout << "| [1] Anterior   [0] Voltar   [2] Proximo  |";
+    cout << "============================================" << endl;
+    cout << " > Escolha uma opcao: ";
+    cin >> option;
+    return option;
+}
+
+int menuOperacoesPrincipais() {
+    int option;
+    cout << "============= NEW CROSS BURGER =============" << endl;
+    cout << "| [1] Cadastrar Pedido                     |";
+    cout << "| [2]                            |";
+    cout << "| [0] Voltar                               |";
+    cout << "============================================" << endl;
+    cout << " > Escolha uma opcao: ";
+    cin >> option;
+    return option;
 }
