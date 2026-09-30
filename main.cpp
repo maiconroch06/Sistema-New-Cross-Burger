@@ -34,16 +34,13 @@ int main() {
 
             switch (option) {
             case 1:
-                // Cadastrar Pedido
+                // Gerenciar Pedido
                 break;
             case 2:
-                // Buscar Pedido
+                // Visualizar Historico de Pedido
                 break;
             case 3:
-                // Atualizar Pedido
-                break;
-            case 4:
-                // Deletar Pedido
+                // Operacoes Principais
                 break;
             
             default:
