@@ -19,7 +19,7 @@ public:
 
     void addItem(const std::string& item);
     void removeItem();
-    void printOrder() const;
+    void showOrder() const;
 
     int getNumber() const;
     std::string getClient() const;

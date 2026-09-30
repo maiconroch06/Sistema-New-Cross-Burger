@@ -10,7 +10,11 @@ KitchenLinkedQueue::~KitchenLinkedQueue() {
 
 // Destrutor
 KitchenLinkedQueue::~KitchenLinkedQueue() {
-
+    while (head != nullptr) {
+        NodeQueue* nextNode = head->next;
+        delete head;
+        head = nextNode;
+    }
 }
 
 // insere um novo elemento no final da fila
@@ -44,6 +48,6 @@ int KitchenLinkedQueue::peek() const {
         cout << "\n # Erro: lista" << endl;
         return -1;
     }
-    head->data.printOrder();
+    head->data.showOrder();
     return 0;
 }  

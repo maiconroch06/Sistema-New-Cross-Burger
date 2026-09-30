@@ -9,17 +9,18 @@ struct NodeStack {
     NodeStack* next;
 };
 
-class LinkedStack {
+class ActionsLinkedStack {
     private:
-        NodeStack* head;
-        NodeStack* tail;
+        NodeStack* top;
     public:
-        LinkedStack(/* args */);
-        ~LinkedStack();
+        ActionsLinkedStack();           // Construtor 
+        ~ActionsLinkedStack();          // Destrutor
         
-        void push(const Order& order);  //
-        Order pop();                    //
+        void push(const Order& order);  // Adicionar ação na pilha
+        Order pop();                    // Remover ação na pilha
 
-        bool isEmpty() const;
-        int peek() const;
+        int peek() const;               // Buscar primeir pidido na pilha
+        bool isEmpty() const;           // Verificar se a pilha está vaz
 };
+
+#endif

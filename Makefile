@@ -2,16 +2,16 @@
 CXX      = g++
 CXXFLAGS = -Wall -std=c++17 -I. -Imodels
 
-# Nome do executável final
-TARGET = programa
+# Nome do executável final (com .exe para Windows)
+TARGET = programa.exe
 
-# Listar todos os arquivos .cpp do projeto
+# Listar todos os arquivos .cpp do projeto (REMOVIDA a '\' da última linha ativa)
 SRCS = main.cpp \
        service/HistoricDoublyLinkedList.cpp \
-       service/KitchenLinkedQueue.cpp \
-       service/ActionsLinkedStack.cpp \
-       service/Order.cpp \
-       view/menus.cpp
+       service/Order.cpp
+#      service/KitchenLinkedQueue.cpp \
+#      service/ActionsLinkedStack.cpp \
+#      view/menus.cpp
 
 # Gerar automaticamente a lista de arquivos de objetos (.o)
 OBJS = $(SRCS:.cpp=.o)
@@ -30,7 +30,6 @@ $(TARGET): $(OBJS)
 # Regra para limpar os arquivos temporários gerados
 clean:
 	rm -f $(OBJS) $(TARGET)
-	rm -f *.exe
 
 # Regra para compilar e rodar direto no terminal
 run: all

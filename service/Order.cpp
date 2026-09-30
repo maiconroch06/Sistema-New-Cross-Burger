@@ -29,15 +29,14 @@ void Order::removeItem() {
     }
 }
 
-void Order::printOrder() const {
-    cout << "---------- PEDIDO " << this->getNumber() << " -----------" << endl;
-    cout << " > Cliente: " << this->getClient() << endl;
-    cout << " > Itens:" << endl;
+void Order::showOrder() const {
+    cout << "   > Pedido: " << this->getNumber() << endl;
+    cout << "   > Cliente: " << this->getClient() << endl;
+    cout << "   > Itens:" << endl;
     for (const string& item : items) {
-        cout << "    - " << item << endl;
+        cout << "      - " << item << endl;
     }
-    cout << " > Total: R$ " << this->getTotal() << endl;
-    cout << "--------------------------------" << endl;
+    cout << "   > Total: R$ " << this->getTotal() << endl;
 }
 
 int Order::getNumber() const {
