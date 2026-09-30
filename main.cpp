@@ -20,10 +20,6 @@ int main() {
     listOrders.insertEnd(order3);
 
     listOrders.printList();
-    NodeList* first = head;
-
-    listOrders.nextOrder(first&);
-    listOrders.previousOrder(first&);
     
     int option;
     do {
