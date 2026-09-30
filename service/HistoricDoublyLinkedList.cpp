@@ -33,6 +33,9 @@ void HistoricDoublyLinkedList::insert(Order& order) {
     }
     
     head = newNode;
+
+    return;
+
 }
 
 // insere um pedido no final da lista
@@ -46,26 +49,25 @@ void HistoricDoublyLinkedList::insertEnd(Order& order) {
     tail->next = newNode;
     tail = newNode;
 
+    // caso a lista esteja vazia, o novo nó será o head
+    if (isEmpty()) {
+        head = newNode;
+    }
+
+    return;
+
 }
 
 // insere um pedido em uma posição específica da lista
 void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
-
-// O metodo pode ser melhor reutilizando funções já prontas
-
     if (isEmpty()) {
         cout << "\n # ERRO: Lista vazia!" << endl;
         return;
     }
 
-    NodeList* newNode = new NodeList();
-    newNode->data = order;
-
     // Caso a posição seja no inicio
     if (index == 0) {
-        newNode->next = head;
-        head->previous = newNode;
-        head = newNode;
+        insert(order);
         return;
     }
 
@@ -75,25 +77,27 @@ void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
     for(int currentCount = 0 ; current != nullptr && currentCount != index ; currentCount++) {
         current = current->next;
     }
-    
+
+    // Se o current for nulo, significa que o indice não foi encontrado
     if (current == nullptr) {
         cerr << "\n # Erro: indice nao encontrado!" << endl;
         return;
     }
 
-    // Ele vai assumir a posição do qual o indice foi definido
-
-    // Inserir no meio
-    
-
     // Inserir no fim
     if (current == tail) {
-        newNode->next = nullptr;
-        newNode->previous = tail;
-
-        tail->next = newNode;
-        tail = newNode;
+        insertEnd(order);
+        return;   
     }
+
+    // Inserir no meio
+    NodeList* newNode = new NodeList();
+    newNode->data = order;
+
+    newNode->next = current;
+    newNode->previous = current->previous;
+    
+    current->previous = newNode;
 
     return;
 

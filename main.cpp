@@ -35,6 +35,7 @@ int main() {
             switch (option) {
             case 1:
                 // Gerenciar Pedido
+
                 break;
             case 2:
                 // Visualizar Historico de Pedido
