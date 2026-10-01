@@ -20,6 +20,7 @@ class KitchenLinkedQueue {
       
         void enqueue(Order& order);     // insere um novo elemento no final da fila
         void dequeue();                 // remove o primeiro elemento da fila
+        void search(int number) const;
         
         bool isEmpty() const;           // verifica se a fila está vazia
         int peek() const;              // retorna o valor do primeiro elemento da fila sem removê-lo

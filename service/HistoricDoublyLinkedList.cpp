@@ -26,15 +26,13 @@ void HistoricDoublyLinkedList::insert(Order& order) {
     newNode->next = head;
     newNode->previous = nullptr;
     
-    if (tail == nullptr) {        // Caso a lista esteja vazia, tail aponta para o Novo Nó
+    if (isEmpty()) {        // Caso a lista esteja vazia, tail aponta para o Novo Nó
         tail = newNode;
-    } else {                      // Caso a lista não esteja vazia, o proximo 
+    } else {                // Caso a lista não esteja vazia, o proximo
         head->previous = newNode;
     }
     
     head = newNode;
-
-    return;
 }
 
 // insere um pedido no final da lista
@@ -56,47 +54,43 @@ void HistoricDoublyLinkedList::insertEnd(Order& order) {
 
 // insere um pedido em uma posição específica da lista
 void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
-    if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
-        return;
-    }
-
     // Caso a posição seja no inicio
     if (index == 0) {
         insert(order);
         return;
     }
 
+    if (isEmpty()) {
+        cout << "\n # ERRO: Lista vazia!" << endl;
+        return;
+    }
+
     NodeList* current = head;
     
     // Vai percorrer até encontrar a possição de mudança
-    for(int currentCount = 0 ; current != nullptr && currentCount != index ; currentCount++) {
+    for (int currentCount = 0; current != nullptr && currentCount < index; currentCount++) {
         current = current->next;
     }
 
     // Se o current for nulo, significa que o indice não foi encontrado
     if (current == nullptr) {
-        cerr << "\n # Erro: indice nao encontrado!" << endl;
+        insertEnd(order); // Inserir no fim caso o índice passe do tamanho
         return;
-    }
-
-    // Inserir no fim
-    if (current == tail) {
-        insertEnd(order);
-        return;   
     }
 
     // Inserir no meio
     NodeList* newNode = new NodeList();
     newNode->data = order;
-
     newNode->next = current;
     newNode->previous = current->previous;
 
-    current->previous = newNode;
-    newNode->previous->next = newNode;
+    if (current->previous != nullptr) {
+        current->previous->next = newNode;
+    } else {
+        head = newNode;
+    }
 
-    return;
+    current->previous = newNode;
 }
 
 // remove um pedido pelo número do pedido
@@ -128,14 +122,13 @@ int HistoricDoublyLinkedList::removeValue(int number) {
     }
 
     cout << "|         # Erro: Pedido nao encontrado!       |" << endl;
-
     return -2;
 }
 
 // busca um pedido pelo número do pedido
 int HistoricDoublyLinkedList::search(int number) const {
     if (isEmpty()) {
-        cout << "|          # ERRO: Lista vazia!        " << endl;
+        cout << "|          # ERRO: Lista vazia!                 |" << endl;
         return -1;
     }
 
@@ -161,37 +154,50 @@ bool HistoricDoublyLinkedList::isEmpty() const {
 int HistoricDoublyLinkedList::nextOrder(int index) const {
     if (isEmpty()) {
         cout << "\n # ERRO: Lista vazia!" << endl;
-        return -1;
-    }
-    
-    NodeList* current = head;
-    while(current != nullptr) {
-        if(current->data.getNumber() == index) {
-            return current->data.getNumber() + 1;
-        }
-        current = current->next;
-    }
-    return 1;
-}
-
-// exibe o pedido anterior
-int HistoricDoublyLinkedList::previousOrder(int index) const {
-    if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
-        return -1;
+        return index;
     }
 
     NodeList* current = head;
     while (current != nullptr && current->data.getNumber() != index) {
         current = current->next;
     }
-    
+
     if (current == nullptr) {
-        cout << "\n # Aviso: Voce esta no primeiro pedido!" << endl;
-        return tail->data.getNumber();
+        cout << "\n # Erro: Pedido nao encontrado!" << endl;
+        return index;
     }
 
-    return current->data.getNumber() - 1;
+    if (current->next == nullptr) {
+        cout << "\n # Aviso: Voce ja esta no ultimo pedido!" << endl;
+        return index;
+    }
+
+    return current->next->data.getNumber();
+}
+
+// exibe o pedido anterior
+int HistoricDoublyLinkedList::previousOrder(int index) const {
+    if (isEmpty()) {
+        cout << "\n # ERRO: Lista vazia!" << endl;
+        return index;
+    }
+
+    NodeList* current = head;
+    while (current != nullptr && current->data.getNumber() != index) {
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "\n # Erro: Pedido nao encontrado!" << endl;
+        return index;
+    }
+
+    if (current->previous == nullptr) {
+        cout << "\n # Aviso: Voce ja esta no primeiro pedido!" << endl;
+        return index;
+    }
+
+    return current->previous->data.getNumber();
 }
 
 // exibe todos os pedidos da lista
@@ -200,11 +206,10 @@ void HistoricDoublyLinkedList::showOrders() const {
 
     while (current != nullptr) {
         current->data.showOrder();
-        cout << "| > Anterior: "<< current->previous << endl;
+        cout << "| > Anterior: " << current->previous << endl;
         cout << "| > Atual: " << current << endl;
-        cout << "| > Proximo: "<< current->next << endl;
+        cout << "| > Proximo: " << current->next << endl;
         
         current = current->next;
     }
-
 }

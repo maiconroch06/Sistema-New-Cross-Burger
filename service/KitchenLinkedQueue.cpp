@@ -30,17 +30,50 @@ void KitchenLinkedQueue::enqueue(Order& order) {
     newNode->data = order;
     newNode->next = nullptr;
 
-    tail->next = newNode;
-    tail = newNode;
+    if (isEmpty()) {
+        head = newNode;
+        tail = newNode;
+    } else {
+        tail->next = newNode;
+        tail = newNode;
+    }
 }
 
 // remove o primeiro elemento da fila
 void KitchenLinkedQueue::dequeue() {
-    if(isEmpty()) {
-        NodeQueue* auxPtr = head;
-        head = auxPtr->next;
-        delete[] auxPtr;
+    if (isEmpty()) {
+        cout << "\n # ERRO: Fila vazia!" << endl;
+        return;
     }
+
+    NodeQueue* auxPtr = head;
+    head = head->next;
+
+    if (head == nullptr) {
+        tail = nullptr;
+    }
+
+    delete auxPtr;
+    quantatyOrders--;
+}
+
+void KitchenLinkedQueue::search(int number) const {
+    if (isEmpty()) {
+        cout << "\n # ERRO: Fila vazia!" << endl;
+        return;
+    }
+
+    NodeQueue* current = head;
+    while (current != nullptr && current->data.getNumber() != number) {
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "|         # Erro: Pedido nao encontrado!       |" << endl;
+        return;
+    }
+
+    current->data.showOrder();
 }
 
 // verifica se a fila está vazia
@@ -50,8 +83,8 @@ bool KitchenLinkedQueue::isEmpty() const {
 
 // retorna o valor do primeiro elemento da fila sem removê-lo
 int KitchenLinkedQueue::peek() const {
-    if(isEmpty()) {
-        cout << "\n # Erro: lista" << endl;
+    if (isEmpty()) {
+        cout << "\n # Erro: Fila vazia!" << endl;
         return -1;
     }
     head->data.showOrder();

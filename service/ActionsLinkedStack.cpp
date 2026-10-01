@@ -21,20 +21,13 @@ void ActionsLinkedStack::push(const Order& order) {
     newNode->data = order;
     newNode->next = top;
     
-    if (top == nullptr) {      // Caso a lista esteja vazia, tail aponta para o Novo Nó
-        top = newNode;
-    } else {                   // Caso a lista não esteja vazia, o proximo 
-        top->next = newNode;
-    }
-
-    return;
+    top = newNode;
 }
 
 Order ActionsLinkedStack::pop() {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
-        Order order;
-        return order;
+        return Order();
     }
 
     // Pega Nó e Pedido
@@ -58,7 +51,6 @@ int ActionsLinkedStack::peek() const {
     }
 
     top->data.showOrder();
-
     return 0;
 }
 

@@ -20,13 +20,16 @@ int main() {
     KitchenLinkedQueue queueOrders;
 
     // Pedidos de exemplo
-    Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0);
-    Order order2(2, "Estudante", {"Pizza GG", "Coca Zero", "Sobremesa"}, 50.0);
-    Order order3(3, "Rocha", {"Milk Shake", "Batata Frita"}, 20.0);
+    Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
+    Order order2(2, "Estudante", {"Pizza GG", "Coca Zero", "Sobremesa"}, 50.0f);
+    Order order3(3, "Rocha", {"Milk Shake", "Batata Frita"}, 20.0f);
 
     listOrders.insertEnd(order1);
     listOrders.insertEnd(order2);
     listOrders.insertEnd(order3);
+
+    // Ajusta o contador da fila para os próximos pedidos começarem a partir do ID 4
+    queueOrders.setQuantatyOrders(3);
 
     int option;
 
@@ -35,8 +38,8 @@ int main() {
 
         switch (option) {
 
-            // GERENCIAR PEDIDO - Menu Principal
-            case 1: {
+            // OPERACOES DO BALCAO - Menu Principal
+            case 1: 
                 int optionGerenciar;
 
                 do {
@@ -51,7 +54,8 @@ int main() {
 
                             cout << "\n============= NOVO PEDIDO =============" << endl;
                             cout << " > Nome Cliente: ";
-                            cin >> client;
+                            cin >> ws;
+                            getline(cin, client);
 
                             int optionCadastrar;
 
@@ -115,19 +119,23 @@ int main() {
                             break;
                         }
 
-                        // BUSCAR PEDIDO - Menu Gerenciar Pedido
+                        // BUSCAR PEDIDO - Menu Gerenciar Pedido OPCIONAL
                         case 2:
-                            cout << "\nBuscar Pedido - ainda nao implementado." << endl;
-                            break;
+                            int number;
+                            cout << "Informe o numero do pedido" << endl;
+                            cin >> number;
 
-                        // ATUALIZAR PEDIDO - Menu Gerenciar Pedido
-                        case 3:
-                            cout << "\nAtualizar Pedido - ainda nao implementado." << endl;
+                            cout << "================================================" << endl;
+                            queueOrders.search(number);
+                            cout << "------------------------------------------------" << endl;
+                            cout << "| [1] Confirmar              [0] Voltar       |" << endl;
+                            cout << "================================================" << endl;
+                                
+
                             break;
 
                         // DELETAR PEDIDO - Menu Gerenciar Pedido
-                        case 4:
-                            cout << "\nDeletar Pedido - ainda nao implementado." << endl;
+                        case 3:
                             break;
 
                         case 0:
@@ -141,10 +149,36 @@ int main() {
                 } while (optionGerenciar != 0);
 
                 break;
-            }
+            
+
+            
+            // OPERAÇÕES DA COZINHA - Menu Principal
+            case 2:
+                int optionOperacoes;
+
+                do {
+                    optionOperacoes = menuOperacoesPrincipais();
+
+                    switch (optionOperacoes) {
+
+                        case 1:
+                            break;
+
+                        case 0:
+                            break;
+
+                        default:
+                            cout << "\n # ERRO: Opcao invalida!" << endl;
+                            break;
+                    }
+
+                } while (optionOperacoes != 0);
+
+                break;
+            
 
             // HISTÓRICO DE PEDIDOS - Menu Principal
-            case 2: {
+            case 3: 
                 int optionHistorico;
                 int historicIndex = 1;
 
@@ -155,7 +189,6 @@ int main() {
 
                     cout << "------------------------------------------------" << endl;
                     cout << "| [1] Anterior   [0] Voltar   [2] Proximo     |" << endl;
-                    cout << "| [3] Exibir todos os pedidos                  |" << endl;
                     cout << "================================================" << endl;
                     cout << " > Escolha uma opcao: ";
 
@@ -188,33 +221,8 @@ int main() {
                 } while (optionHistorico != 0);
 
                 break;
-            }
+            
 
-            // OPERAÇÕES PRINCIPAIS - Menu Principal
-            case 3: {
-                int optionOperacoes;
-
-                do {
-                    optionOperacoes = menuOperacoesPrincipais();
-
-                    switch (optionOperacoes) {
-
-                        case 1:
-                            cout << "\nCadastrar Pedido - utilize o menu Gerenciar Pedido." << endl;
-                            break;
-
-                        case 0:
-                            break;
-
-                        default:
-                            cout << "\n # ERRO: Opcao invalida!" << endl;
-                            break;
-                    }
-
-                } while (optionOperacoes != 0);
-
-                break;
-            }
 
             // SAIR - Menu Principal
             case 0:
@@ -231,15 +239,13 @@ int main() {
     return 0;
 }
 
-
-
 int menuPrincipal() {
     int option;
 
     cout << "\n============= NEW CROSS BURGER =============" << endl;
-    cout << "| [1] Gerenciar Pedido                     |" << endl;
-    cout << "| [2] Visualizar Historico de Pedido       |" << endl;
-    cout << "| [3] Operacoes Principais                 |" << endl;
+    cout << "| [1] Operacoes do Balcao                  |" << endl;
+    cout << "| [2] Operacoes da Cozinha                 |" << endl;
+    cout << "| [2] Visualizar Historico de Pedidos      |" << endl;
     cout << "| [0] Sair                                 |" << endl;
     cout << "============================================" << endl;
     cout << " > Escolha uma opcao: ";
@@ -249,16 +255,13 @@ int menuPrincipal() {
     return option;
 }
 
-
-
 int menuGerenciarPedido() {
     int option;
 
     cout << "\n============= GERENCIAR PEDIDO =============" << endl;
     cout << "| [1] Cadastrar Pedido                     |" << endl;
     cout << "| [2] Buscar Pedido                        |" << endl;
-    cout << "| [3] Atualizar Pedido                     |" << endl;
-    cout << "| [4] Deletar Pedido                       |" << endl;
+    cout << "| [3] Deletar Pedido                       |" << endl;
     cout << "| [0] Voltar                               |" << endl;
     cout << "============================================" << endl;
     cout << " > Escolha uma opcao: ";
@@ -267,8 +270,6 @@ int menuGerenciarPedido() {
 
     return option;
 }
-
-
 
 int menuCadastrarPedido() {
     int option;
@@ -288,8 +289,6 @@ int menuCadastrarPedido() {
 
     return option;
 }
-
-
 
 int menuOperacoesPrincipais() {
     int option;

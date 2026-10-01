@@ -15,9 +15,9 @@ private:
     float total;
 
 public:
-    Order(); // Construtor padrão
+    Order();
     Order(const string& client, const vector<string>& items);
-    Order(const int number, const string& client, const vector<string>& items, const int total);
+    Order(const int number, const string& client, const vector<string>& items, const float total);
     ~Order();
 
     void addItem(const std::string& item);
@@ -28,8 +28,8 @@ public:
 
     int getNumber() const;
     void setNumber(int number);
-    std::string getClient() const;
-    const std::vector<std::string>& getItems() const;
+    string getClient() const;
+    const vector<string>& getItems() const;
     float getTotal() const;
 };
 
