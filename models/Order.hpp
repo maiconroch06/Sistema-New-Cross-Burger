@@ -17,11 +17,14 @@ private:
 public:
     Order(); // Construtor padrão
     Order(const string& client, const vector<string>& items);
+    Order(const int number, const string& client, const vector<string>& items, const int total);
     ~Order();
 
     void addItem(const std::string& item);
     void removeItem();
     void showOrder() const;
+
+    float calcularTotal() const;
 
     int getNumber() const;
     void setNumber(int number);

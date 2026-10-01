@@ -6,6 +6,7 @@ using namespace std;
 KitchenLinkedQueue::~KitchenLinkedQueue() {
     head = nullptr;
     tail = nullptr;
+    quantatyOrders = 0;
 }
 
 // Destrutor
@@ -20,6 +21,11 @@ KitchenLinkedQueue::~KitchenLinkedQueue() {
 // insere um novo elemento no final da fila
 void KitchenLinkedQueue::enqueue(Order& order) {
     NodeQueue* newNode = new NodeQueue();
+
+    int number = getQuantatyOrders() + 1;
+    order.setNumber(number);
+
+    setQuantatyOrders(number);
 
     newNode->data = order;
     newNode->next = nullptr;
@@ -50,4 +56,12 @@ int KitchenLinkedQueue::peek() const {
     }
     head->data.showOrder();
     return 0;
+}
+
+int KitchenLinkedQueue::getQuantatyOrders() const {
+    return quantatyOrders;
+}
+
+void KitchenLinkedQueue::setQuantatyOrders(int quantatyOrders) {
+    this->quantatyOrders = quantatyOrders;
 }

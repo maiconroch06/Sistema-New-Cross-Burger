@@ -10,12 +10,16 @@ Order::Order() {
 }
 
 Order::Order(const string& client, const vector<string>& items) {
+    //this->number = number; // Será definido na classe KitchenLikedQueue
+    this->client = client;
+    this->items = items;
+    this->total = calcularTotal();
+}
+
+Order::Order(const int number, const string& client, const vector<string>& items, const int total) {
     this->number = number;
     this->client = client;
-
-
     this->items = items;
-
     this->total = total;
 }
 
@@ -44,6 +48,26 @@ void Order::showOrder() const {
         cout << "      - " << item << endl;
     }
     cout << "   > Total: R$ " << this->getTotal() << endl;
+}
+
+float Order::calcularTotal() const {
+    float total = 0;
+
+    for (const string& item : this->items) {
+        if (item == "Cachorro Quente") {
+            total += 8.0;
+        } else if (item == "Batata Frita") {
+            total += 6.0;
+        } else if (item == "Hambuger") {
+            total += 20.0;
+        } else if (item == "Pizza") {
+            total += 46.0;
+        } else {
+            total += 12.0;
+        }
+    }
+
+    return total;
 }
 
 int Order::getNumber() const {

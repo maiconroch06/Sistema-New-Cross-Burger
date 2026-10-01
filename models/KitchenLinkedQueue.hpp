@@ -13,15 +13,20 @@ class KitchenLinkedQueue {
     private:
         NodeQueue* head;
         NodeQueue* tail;
+        int quantatyOrders;
     public:
         KitchenLinkedQueue();
         ~KitchenLinkedQueue();
       
         void enqueue(Order& order);     // insere um novo elemento no final da fila
         void dequeue();                 // remove o primeiro elemento da fila
-
+        
         bool isEmpty() const;           // verifica se a fila está vazia
         int peek() const;              // retorna o valor do primeiro elemento da fila sem removê-lo
+        
+        int getQuantatyOrders() const;
+        void setQuantatyOrders(int quantatyOrders);
+
 };
 
 #endif
