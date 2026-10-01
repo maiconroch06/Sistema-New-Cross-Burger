@@ -33,7 +33,8 @@ void ActionsLinkedStack::push(const Order& order) {
 Order ActionsLinkedStack::pop() {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
-        return;
+        Order order;
+        return order;
     }
 
     // Pega Nó e Pedido

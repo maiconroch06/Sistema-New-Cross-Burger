@@ -24,10 +24,6 @@ Order::Order(const int number, const string& client, const vector<string>& items
 }
 
 Order::~Order() {
-    number = NULL;
-    client = "";
-    items = {NULL};
-    total = NULL;
 }
 
 void Order::addItem(const string& item) {

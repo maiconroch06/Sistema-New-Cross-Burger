@@ -2,35 +2,34 @@
 CXX      = g++
 CXXFLAGS = -Wall -std=c++17 -I. -Imodels
 
-# Nome do executável final (com .exe para Windows)
+# Nome do executável final
 TARGET = programa.exe
 
-# Listar todos os arquivos .cpp do projeto (REMOVIDA a '\' da última linha ativa)
+# Arquivos .cpp do projeto
 SRCS = main.cpp \
-	service/HistoricDoublyLinkedList.cpp \
-	service/Order.cpp
-	service/KitchenLinkedQueue.cpp \
-	service/ActionsLinkedStack.cpp \
-	view/menus.cpp
+       service/HistoricDoublyLinkedList.cpp \
+       service/Order.cpp \
+       service/KitchenLinkedQueue.cpp \
+       service/ActionsLinkedStack.cpp \
 
-# Gerar automaticamente a lista de arquivos de objetos (.o)
+# Gerar automaticamente a lista de arquivos .o
 OBJS = $(SRCS:.cpp=.o)
 
-# Regra principal (padrão)
+# Regra principal
 all: $(TARGET)
 
-# Regra para linkar os objetos e gerar o executável
+# Linkar os objetos e gerar o executável
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
 
-# Regra genérica para compilar os arquivos .cpp em .o
+# Compilar .cpp em .o
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Regra para limpar os arquivos temporários gerados
+# Limpar arquivos temporários
 clean:
 	rm -f $(OBJS) $(TARGET)
 
-# Regra para compilar e rodar direto no terminal
+# Compilar e executar
 run: all
 	./$(TARGET)

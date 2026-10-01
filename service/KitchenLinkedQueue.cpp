@@ -3,7 +3,7 @@
 using namespace std;
 
 // Construtor
-KitchenLinkedQueue::~KitchenLinkedQueue() {
+KitchenLinkedQueue::KitchenLinkedQueue() {
     head = nullptr;
     tail = nullptr;
     quantatyOrders = 0;
@@ -36,7 +36,7 @@ void KitchenLinkedQueue::enqueue(Order& order) {
 
 // remove o primeiro elemento da fila
 void KitchenLinkedQueue::dequeue() {
-    if(head = nullptr) {
+    if(isEmpty()) {
         NodeQueue* auxPtr = head;
         head = auxPtr->next;
         delete[] auxPtr;
