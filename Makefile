@@ -7,11 +7,11 @@ TARGET = programa.exe
 
 # Listar todos os arquivos .cpp do projeto (REMOVIDA a '\' da última linha ativa)
 SRCS = main.cpp \
-       service/HistoricDoublyLinkedList.cpp \
-       service/Order.cpp
-#      service/KitchenLinkedQueue.cpp \
-#      service/ActionsLinkedStack.cpp \
-#      view/menus.cpp
+	service/HistoricDoublyLinkedList.cpp \
+	service/Order.cpp
+	service/KitchenLinkedQueue.cpp \
+	service/ActionsLinkedStack.cpp \
+	view/menus.cpp
 
 # Gerar automaticamente a lista de arquivos de objetos (.o)
 OBJS = $(SRCS:.cpp=.o)

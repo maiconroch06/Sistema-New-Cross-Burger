@@ -21,7 +21,7 @@ class KitchenLinkedQueue {
         void dequeue();                 // remove o primeiro elemento da fila
 
         bool isEmpty() const;           // verifica se a fila está vazia
-        int peek() const;              // retorna o valor do primeiro elemento da fila sem removê-lo      
+        int peek() const;              // retorna o valor do primeiro elemento da fila sem removê-lo
 };
 
 #endif

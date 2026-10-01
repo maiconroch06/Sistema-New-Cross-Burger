@@ -5,18 +5,25 @@ using namespace std;
 Order::Order() {
     this->number = 0;
     this->client = "";
+    this->items = {NULL};
     this->total = 0.0f;
 }
 
-Order::Order(int number, const string& client, const vector<string>& items, float total) {
+Order::Order(const string& client, const vector<string>& items) {
     this->number = number;
     this->client = client;
+
+
     this->items = items;
+
     this->total = total;
 }
 
 Order::~Order() {
-
+    number = NULL;
+    client = "";
+    items = {NULL};
+    total = NULL;
 }
 
 void Order::addItem(const string& item) {
@@ -41,6 +48,10 @@ void Order::showOrder() const {
 
 int Order::getNumber() const {
     return number;
+}
+
+void Order::setNumber(int number) {
+    this->number = number;
 }
 
 std::string Order::getClient() const {

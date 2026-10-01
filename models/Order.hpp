@@ -5,16 +5,18 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Order {
 private:
     int number;
-    std::string client;
-    std::vector<std::string> items;
+    string client;
+    vector<string> items;
     float total;
 
 public:
     Order(); // Construtor padrão
-    Order(int number, const std::string& client, const std::vector<std::string>& items, float total);
+    Order(const string& client, const vector<string>& items);
     ~Order();
 
     void addItem(const std::string& item);
@@ -22,6 +24,7 @@ public:
     void showOrder() const;
 
     int getNumber() const;
+    void setNumber(int number);
     std::string getClient() const;
     const std::vector<std::string>& getItems() const;
     float getTotal() const;

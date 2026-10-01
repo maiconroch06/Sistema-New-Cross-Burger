@@ -50,4 +50,4 @@ int KitchenLinkedQueue::peek() const {
     }
     head->data.showOrder();
     return 0;
-}  
+}
