@@ -24,7 +24,6 @@ int main() {
     
     int option;
     do {
-        
         cout << "\n============= NEW CROSS BURGER =============" << endl;
         cout << "| [1] Gerenciar Pedido                     |" << endl;
         cout << "| [2] Visualizar Historico de Pedido       |" << endl;
@@ -37,6 +36,7 @@ int main() {
         switch (option) {
         case 1: {
             int option;
+            do {
             cout << "\n============= GERENCIAR PEDIDO =============" << endl;
             cout << "| [1] Cadastrar Pedido                     |" << endl;
             cout << "| [2] Buscar Pedido                        |" << endl;
@@ -51,42 +51,50 @@ int main() {
             case 1:
                 int option;
                 int quantity;
+                string cliente;
                 do {
-                cout << "\n============= CADASTRAR PEDIDO =============" << endl;
-                cout << "| [1] Cachorro Quente                      |" << endl;
-                cout << "| [2] Batata Frita                         |" << endl;
-                cout << "| [3] Hambuger                             |" << endl;
-                cout << "| [4] Pizza                                |" << endl;
-                cout << "| [5] Coca Zero                            |" << endl;
-                cout << "| [0] Voltar                               |" << endl;
-                cout << "============================================" << endl;
-                cout << " > Escolha uma opcao: ";
-                cin >> option;
-                cout << " > Escolha uma quantidade: ";
-                cin >> quantity;
+                    cout << "============= CADASTRAR PEDIDO =============" << endl;
+                    cout << "| [1] Cachorro Quente         R$ 5.00             |" << endl;
+                    cout << "| [2] Batata Frita                         |" << endl;
+                    cout << "| [3] Hambuger                             |" << endl;
+                    cout << "| [4] Pizza                                |" << endl;
+                    cout << "| [5] Coca Zero                            |" << endl;
+                    cout << "------------------------------------------------" << endl;
+                    cout << "|    [1] Anterior   [0] Voltar   [2] Proximo   |" << endl;
+                    cout << "================================================" << endl;
+                    cout << " > Escolha uma opcao: ";
+                    cin >> option;
+                    cout << " > Escolha uma quantidade: ";
+                    cin >> quantity;
+                    cout << " > Nome Cliente: ";
+                    cin >> cliente;
 
-                switch (option) {
-                case 1:
-
-                    break;
-                case 2:
-                
-                    break;
-                case 3:
-                
-                    break;
-                case 4:
-                
-                    break;
-                case 5:
+                    switch (option) {
+                    case 1:
+                        listOrders.insertEnd("Cachorro Quente", cliente);
+                        break;
+                    case 2:
                     
-                    break;
-                
-                default:
-                    break;
-                }
+                        break;
+                    case 3:
+                    
+                        break;
+                    case 4:
+                    
+                        break;
+                    case 5:
+                        
+                        break;
+                    
+                    default:
+                        cout << "\n # ERRO: Opcao invalida!\n" << endl;
+                        break;
+                    }
 
+                    } while (option != 0);
                 } while (option != 0);
+                break;
+
             case 2:
                 // Buscar Pedido
                 break;
