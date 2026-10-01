@@ -52,26 +52,28 @@ int main() {
                 int option;
                 int quantity;
                 string cliente;
+                
+                cout << " > Nome Cliente: ";
+                cin >> cliente;
+
                 do {
-                    cout << "============= CADASTRAR PEDIDO =============" << endl;
-                    cout << "| [1] Cachorro Quente         R$ 5.00             |" << endl;
-                    cout << "| [2] Batata Frita                         |" << endl;
-                    cout << "| [3] Hambuger                             |" << endl;
-                    cout << "| [4] Pizza                                |" << endl;
-                    cout << "| [5] Coca Zero                            |" << endl;
+                    cout << "============= CADASTRAR PEDIDO =================" << endl;
+                    cout << "| [1] Cachorro Quente         R$ 5.00          |" << endl;
+                    cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
+                    cout << "| [3] Hambuger                R$ 20.00         |" << endl;
+                    cout << "| [4] Pizza                   R$ 46.00         |" << endl;
+                    cout << "| [5] Coca Zero               R$ 9.00          |" << endl;
                     cout << "------------------------------------------------" << endl;
-                    cout << "|    [1] Anterior   [0] Voltar   [2] Proximo   |" << endl;
+                    cout << "|     [10] Confirmar          [0] Cancelar     |" << endl;
                     cout << "================================================" << endl;
                     cout << " > Escolha uma opcao: ";
                     cin >> option;
                     cout << " > Escolha uma quantidade: ";
                     cin >> quantity;
-                    cout << " > Nome Cliente: ";
-                    cin >> cliente;
-
+                    
                     switch (option) {
                     case 1:
-                        listOrders.insertEnd("Cachorro Quente", cliente);
+                        
                         break;
                     case 2:
                     
@@ -91,8 +93,8 @@ int main() {
                         break;
                     }
 
-                    } while (option != 0);
-                } while (option != 0);
+                    } while (option != 0 || option == 10);
+            } 
                 break;
 
             case 2:
