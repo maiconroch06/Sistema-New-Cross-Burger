@@ -91,6 +91,18 @@ int KitchenLinkedQueue::peek() const {
     return 0;
 }
 
+// exibe todos os pedidos da lista, porém, mostra apenas o número do pedido e o nome do cliente
+void KitchenLinkedQueue::showOrders() const {
+    NodeQueue* current = head;
+
+    while (current != nullptr) {
+        cout << "Nº Pedido: " << current->data.getNumber() << endl;
+        cout << "Nome Clinte: " << current->data.getClient() << endl;
+        cout << "----------------------------------------" << endl;
+        current = current->next;
+    }
+}
+
 int KitchenLinkedQueue::getQuantatyOrders() const {
     return quantatyOrders;
 }
