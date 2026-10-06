@@ -9,7 +9,7 @@
 using namespace std;
 
 // Protótipos das funções
-void menuPrincipal();
+int menuPrincipal();
     void operacoesBalcao();
         void cadastrarPedido();
         void removerPedido();
@@ -35,25 +35,28 @@ int main() {
 
     queueOrders.setQuantatyOrders(3);
 
-    int optionMain = menuPrincipal();
+    int optionMain;
+    do {
+        optionMain = menuPrincipal();
 
-    switch (optionMain) {
-        case 1:
-            operacoesBalcao();
-            break;
-        case 2:
-            // Implementar operações da cozinha
-            break;
-        case 3:
-            exibirHistoricoPedidos();
-            break;
-        case 0:
-            cout << "\nSaindo do programa..." << endl;
-            break;
-        default:
-            cout << "\n # ERRO: Opcao invalida!" << endl;
-            break;
-    }
+        switch (optionMain) {
+            case 1:
+                operacoesBalcao();
+                break;
+            case 2:
+                // Implementar operações da cozinha
+                break;
+            case 3:
+                exibirHistoricoPedidos();
+                break;
+            case 0:
+                cout << "\nSaindo do programa..." << endl;
+                break;
+            default:
+                cout << "\n # ERRO: Opcao invalida!" << endl;
+                break;
+        }
+    } while(optionMain != 0);
 
     return 0;
 }
