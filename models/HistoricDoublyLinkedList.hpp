@@ -31,6 +31,9 @@ class HistoricDoublyLinkedList {
         int previousOrder(int index) const;         // exibe o pedido anterior
         
         void showOrders() const;                    // exibe todos os pedidos da lista
+
+        // Funções do Menu Histórico
+        void menuExibirHistoricoPedidos();
 };
 
 #endif

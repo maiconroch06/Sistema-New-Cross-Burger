@@ -213,3 +213,47 @@ void HistoricDoublyLinkedList::showOrders() const {
         current = current->next;
     }
 }
+
+
+// Funções de Exibição de Menu
+
+void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
+    int optionHistorico;
+    int historicIndex = 1;
+
+    do {
+        cout << "\n============= HISTORICO DE PEDIDOS =============" << endl;
+
+        this->search(historicIndex);
+
+        cout << "------------------------------------------------" << endl;
+        cout << "| [1] Anterior   [0] Voltar   [2] Proximo     |" << endl;
+        cout << "================================================" << endl;
+        cout << " > Escolha uma opcao: ";
+
+        cin >> optionHistorico;
+
+        switch (optionHistorico) {
+
+            case 1:
+                this->previousOrder(historicIndex);
+                break;
+
+            case 2:
+                this->nextOrder(historicIndex);
+                break;
+
+            case 3:
+                this->showOrders();
+                break;
+
+            case 0:
+                break;
+
+            default:
+                cout << "\n # ERRO: Opcao invalida!" << endl;
+                break;
+        }
+
+    } while (optionHistorico != 0);
+}
