@@ -1,4 +1,4 @@
-#include "../models/KitchenLinkedQueue.hpp" 
+#include "../models/KitchenLinkedQueue.hpp"
 
 using namespace std;
 
@@ -95,8 +95,9 @@ int KitchenLinkedQueue::peek() const {
 void KitchenLinkedQueue::showOrders() const {
     NodeQueue* current = head;
 
+    cout << "----------------------------------------" << endl;
     while (current != nullptr) {
-        cout << "Nº Pedido: " << current->data.getNumber() << endl;
+        cout << "N Pedido: " << current->data.getNumber() << endl;
         cout << "Nome Clinte: " << current->data.getClient() << endl;
         cout << "----------------------------------------" << endl;
         current = current->next;
@@ -111,43 +112,89 @@ void KitchenLinkedQueue::setQuantatyOrders(int quantatyOrders) {
     this->quantatyOrders = quantatyOrders;
 }
 
+void KitchenLinkedQueue::removeOrder(int index) {
+    if (isEmpty()) {
+        cout << "\n # ERRO: Fila vazia!" << endl;
+        return;
+    }
+
+    NodeQueue* current = head;
+    NodeQueue* previous = nullptr;
+
+    while (current != nullptr && current->data.getNumber() != index) {
+        previous = current;
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "\n # ERRO: Pedido nao encontrado!" << endl;
+        return;
+    }
+
+    if (current == head) {
+        head = head->next;
+        if (head == nullptr) {
+            tail = nullptr;
+        }
+    } else {
+        previous->next = current->next;
+        if (current == tail) {
+            tail = previous;
+        }
+    }
+
+    delete current;
+    quantatyOrders--;
+    cout << "\nPedido removido com sucesso!" << endl;
+}
+
 
 
 // Funções de Exibição de Menu
 void KitchenLinkedQueue::menuOperacoesBalcao() {
     int option = 1, numberOrder;
-
+    
     do {
-        if (option == 1 || option == 2 || option == 3) {
+        if (isEmpty()) {
+            cout << "\n Fila de Pedidos Vazia!" << endl;
+            return;
+
+        } else if (option == 1 || option == 2 || option == 3) {
             // Imprime apenas o numero e nome do cliente
             // de todos os pedidos na fila de pedidos
             this->showOrders();
 
-            cout << "Selecione um pedido para gerencia-lo (Nº): ";
+            cout << "Selecione um pedido para gerencia-lo (N): ";
             cin >> numberOrder;
+
+            // tratamento de erro
+
+            // numero n encontrado
         }
 
-        cout << "\n============= GERENCIAR PEDIDO =============" << endl;
+        cout << "\n=============== GERENCIAR PEDIDO ===============" << endl;
         this->search(numberOrder);
         cout << "------------------------------------------------" << endl;
-        cout << "| [1] Adicionar Novo Pedido  [3] Buscar Pedido |" << endl;
-        cout << "| [2] Remover Pedido         [0] Cancelar      |" << endl;
+        cout << "| [1] Adicionar Novo Pedido  [3] Voltar        |" << endl;
+        cout << "| [2] Remover Pedido         [0] Sair          |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
         cin >> option;
         
-        // Se escolheu 1, 2 ou 3, usuario volta para selecionar um pedido da fila
-        // Se escolheu 0, 0 usuario volta para o menu de gerenciar pedido
+        // Se escolheu 1, 2 ou 3: usuario volta para selecionar um pedido da fila
+        // Se escolheu 0: usuario volta para o menu de gerenciar pedido
         switch (option) {
-            // Adicionar Novo Pedido
             case 1:
+                // Adicionar Novo Pedido
                 menuCadastrarPedido();
                 break;
             case 2:
-                menuRemoverPedido();
+                // Inativa um pedido
+                menuRemoverPedido(numberOrder);
                 break;
             case 3:
                 // Buscar Pedido
+
                 break;
             case 0:
                 cout << "\nOperacao cancelada." << endl;
@@ -159,8 +206,25 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
     } while (option != 0);
 }
 
+void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
+    vector<string> menuNames = {"Cachorro Quente", "Batata Frita", "Hamburguer", "Pizza", "Coca Zero"};
+    
+    cout << "\n=== CARRINHO ATUAL ===" << endl;
+    bool vazio = true;
+    for (size_t i = 0; i < menuNames.size(); ++i) {
+        if (i < quantatyItems.size() && quantatyItems[i] > 0) {
+            cout << "   - " << menuNames[i] << ": " << quantatyItems[i] << endl;
+            vazio = false;
+        }
+    }
+    if (vazio) {
+        cout << "   (Nenhum item no carrinho)" << endl;
+    }
+}
+
 void KitchenLinkedQueue::menuCadastrarPedido() {
     vector<string> items;
+    vector<int> quantatyItems = {0, 0, 0, 0, 0};
     string client;
 
     cout << "\n============= NOVO PEDIDO =============" << endl;
@@ -170,6 +234,9 @@ void KitchenLinkedQueue::menuCadastrarPedido() {
 
     int optionCadastrar;
     do {
+        // Exibe o carrinho simples
+        carrinho(quantatyItems);
+
         cout << "\n============= CADASTRAR PEDIDO =================" << endl;
         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
@@ -186,26 +253,31 @@ void KitchenLinkedQueue::menuCadastrarPedido() {
 
             case 1:
                 items.push_back("Cachorro Quente");
+                quantatyItems[0]++; // Incrementa direto na opcao escolhida
                 cout << "\nItem adicionado!" << endl;
                 break;
 
             case 2:
                 items.push_back("Batata Frita");
+                quantatyItems[1]++;
                 cout << "\nItem adicionado!" << endl;
                 break;
 
             case 3:
                 items.push_back("Hamburguer");
+                quantatyItems[2]++;
                 cout << "\nItem adicionado!" << endl;
                 break;
 
             case 4:
                 items.push_back("Pizza");
+                quantatyItems[3]++;
                 cout << "\nItem adicionado!" << endl;
                 break;
 
             case 5:
                 items.push_back("Coca Zero");
+                quantatyItems[4]++;
                 cout << "\nItem adicionado!" << endl;
                 break;
 
@@ -213,7 +285,7 @@ void KitchenLinkedQueue::menuCadastrarPedido() {
                 if (items.empty()) {
                     cout << "\n # ERRO: Adicione pelo menos um item ao pedido!" << endl;
                 } else {
-                    Order order(client, items);
+                    Order order(client, items, quantatyItems);
                     this->enqueue(order);
                     
                     cout << "\nPedido cadastrado com sucesso!" << endl;
@@ -235,10 +307,10 @@ void KitchenLinkedQueue::menuCadastrarPedido() {
 }
 
 
-void KitchenLinkedQueue::menuRemoverPedido() {
+void KitchenLinkedQueue::menuRemoverPedido(int index) {
     int optionRemove;
     do {
-        cout << "\n=============== REMOVER PEDIDO ===============" << endl;
+        cout << "\n================ REMOVER PEDIDO ================" << endl;
         cout << " # Deseja confirmar a remocao do pedido?" << endl;
         cout << "------------------------------------------------" << endl;
         cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
@@ -249,13 +321,8 @@ void KitchenLinkedQueue::menuRemoverPedido() {
 
         switch (optionRemove) {
             case 1: {
-                int number;
-                cout << "\nPedido deletado com sucesso!" << endl;
-                cin >> number;
-                this->dequeue();
-                //this->removeOrder(number);
-                cout << "\nPedido deletado com sucesso!" << endl;
-                break;
+                this->removeOrder(index);
+                return;
             }
             case 0:
                 cout << "\nOperacao cancelada." << endl;

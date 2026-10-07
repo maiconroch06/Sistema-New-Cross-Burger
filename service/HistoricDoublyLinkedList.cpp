@@ -234,13 +234,12 @@ void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
         cin >> optionHistorico;
 
         switch (optionHistorico) {
-
             case 1:
-                this->previousOrder(historicIndex);
+                historicIndex = this->previousOrder(historicIndex);
                 break;
 
             case 2:
-                this->nextOrder(historicIndex);
+                historicIndex = this->nextOrder(historicIndex);
                 break;
 
             case 3:

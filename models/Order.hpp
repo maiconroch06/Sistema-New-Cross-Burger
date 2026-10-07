@@ -12,11 +12,13 @@ private:
     int number;
     string client;
     vector<string> items;
+    vector<int> quantatyItems;
     float total;
 
 public:
     Order();
     Order(const string& client, const vector<string>& items);
+    Order(const string& client, const vector<string>& items, const vector<int>& quantatyItems);
     Order(const int number, const string& client, const vector<string>& items, const float total);
     ~Order();
 
@@ -31,6 +33,7 @@ public:
     string getClient() const;
     const vector<string>& getItems() const;
     float getTotal() const;
+    const vector<int>& getQuantatyItems() const;
 };
 
 #endif

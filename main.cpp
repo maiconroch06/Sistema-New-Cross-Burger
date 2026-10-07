@@ -44,6 +44,7 @@ int main() {
                 break;
             case 2:
                 // Implementar operações da cozinha
+                
                 break;
             case 3:
                 HistoricDoublyLinkedListOrders.menuExibirHistoricoPedidos();

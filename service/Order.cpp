@@ -7,12 +7,14 @@ Order::Order() {
     this->client = "";
     this->items = {};
     this->total = 0.0f;
+    this->quantatyItems = {0, 0, 0, 0, 0};
 }
 
-Order::Order(const string& client, const vector<string>& items) {
-    //this->number = number; // Será definido na classe KitchenLikedQueue
+// Será definido na classe KitchenLikedQueue
+Order::Order(const string& client, const vector<string>& items, const vector<int>& quantatyItems) {
     this->client = client;
     this->items = items;
+    this->quantatyItems = quantatyItems;
     this->total = calcularTotal();
 }
 
@@ -20,11 +22,11 @@ Order::Order(const int number, const string& client, const vector<string>& items
     this->number = number;
     this->client = client;
     this->items = items;
+    this->quantatyItems = {0, 0, 0, 0, 0};
     this->total = total;
 }
 
-Order::~Order() {
-}
+Order::~Order() {}
 
 void Order::addItem(const string& item) {
     this->items.push_back(item);
@@ -42,9 +44,32 @@ void Order::showOrder() const {
     cout << "   > Pedido: " << this->getNumber() << endl;
     cout << "   > Cliente: " << this->getClient() << endl;
     cout << "   > Itens:" << endl;
-    for (const string& item : items) {
-        cout << "      - " << item << endl;
+
+    vector<string> menuNames = {"Cachorro Quente", "Batata Frita", "Hamburguer", "Pizza", "Coca Zero"};
+
+    // Verifica se ha quantidades registradas no vetor
+    bool temQuantidade = false;
+    for (int qtd : quantatyItems) {
+        if (qtd > 0) {
+            temQuantidade = true;
+            break;
+        }
     }
+
+    if (temQuantidade) {
+        // Exibicao para pedidos cadastrados pelo menu
+        for (size_t i = 0; i < menuNames.size() && i < quantatyItems.size(); ++i) {
+            if (quantatyItems[i] > 0) {
+                cout << "      - " << menuNames[i] << " x" << quantatyItems[i] << endl;
+            }
+        }
+    } else {
+        // Exibicao para pedidos de exemplo (do main.cpp)
+        for (const string& item : items) {
+            cout << "      - " << item << endl;
+        }
+    }
+
     cout << "   > Total: R$ " << this->getTotal() << endl;
 }
 
@@ -88,4 +113,8 @@ const vector<string>& Order::getItems() const {
 
 float Order::getTotal() const {
     return total;
+}
+
+const vector<int>& Order::getQuantatyItems() const {
+    return quantatyItems;
 }

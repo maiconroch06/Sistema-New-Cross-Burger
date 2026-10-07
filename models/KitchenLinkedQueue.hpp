@@ -33,16 +33,18 @@ class KitchenLinkedQueue {
         int peek() const;                 // retorna o valor do primeiro elemento da fila sem removê-lo
         
         void showOrders() const;          // exibe todos os pedidos da lista
-        //void removeOrder(int index);               // remover pedido
+        void removeOrder(int index);               // remover pedido
 
         int getQuantatyOrders() const;
         void setQuantatyOrders(int quantatyOrders);
+
+        void carrinho(const vector<int>& quantatyItems);
 
         // Funções de Menu
         void menuAddItem();
         void menuOperacoesBalcao();
         void menuCadastrarPedido();
-        void menuRemoverPedido();
+        void menuRemoverPedido(int index);
 };
 
 #endif
