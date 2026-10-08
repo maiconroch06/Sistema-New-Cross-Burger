@@ -48,15 +48,15 @@ void Order::showOrder() const {
     vector<string> menuNames = {"Cachorro Quente", "Batata Frita", "Hamburguer", "Pizza", "Coca Zero"};
 
     // Verifica se ha quantidades registradas no vetor
-    bool temQuantidade = false;
+    bool isQuantaty = false;
     for (int qtd : quantatyItems) {
         if (qtd > 0) {
-            temQuantidade = true;
+            isQuantaty = true;
             break;
         }
     }
 
-    if (temQuantidade) {
+    if (isQuantaty) {
         // Exibicao para pedidos cadastrados pelo menu
         for (size_t i = 0; i < menuNames.size() && i < quantatyItems.size(); ++i) {
             if (quantatyItems[i] > 0) {

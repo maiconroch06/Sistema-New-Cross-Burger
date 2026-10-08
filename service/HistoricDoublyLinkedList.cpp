@@ -1,4 +1,5 @@
 #include "../models/HistoricDoublyLinkedList.hpp"
+#include "../utils/TerminalUtils.hpp"
 
 using namespace std;
 
@@ -61,7 +62,7 @@ void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
     }
 
     if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
+        cerr << "\n # Erro: Lista vazia!" << endl;
         return;
     }
 
@@ -96,7 +97,7 @@ void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
 // remove um pedido pelo número do pedido
 int HistoricDoublyLinkedList::removeValue(int number) {
     if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
+        cerr << "\n # Erro: Lista vazia!" << endl;
         return -1;
     }
 
@@ -121,14 +122,14 @@ int HistoricDoublyLinkedList::removeValue(int number) {
         current = current->next;
     }
 
-    cout << "|         # Erro: Pedido nao encontrado!       |" << endl;
+    cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
     return -2;
 }
 
 // busca um pedido pelo número do pedido
 int HistoricDoublyLinkedList::search(int number) const {
     if (isEmpty()) {
-        cout << "|          # ERRO: Lista vazia!                 |" << endl;
+        cerr << "|          # Erro: Lista vazia!                 |" << endl;
         return -1;
     }
 
@@ -141,7 +142,7 @@ int HistoricDoublyLinkedList::search(int number) const {
         current = current->next;
     }
 
-    cout << "|         # Erro: Pedido nao encontrado!       |" << endl;
+    cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
     return -2;
 }
 
@@ -153,23 +154,22 @@ bool HistoricDoublyLinkedList::isEmpty() const {
 // exibe o proximo pedido
 int HistoricDoublyLinkedList::nextOrder(int index) const {
     if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
-        return index;
+        cerr << "\n # Erro: Lista vazia!" << endl;
+        return -1;
     }
 
     NodeList* current = head;
     while (current != nullptr && current->data.getNumber() != index) {
         current = current->next;
     }
-
+    
     if (current == nullptr) {
-        cout << "\n # Erro: Pedido nao encontrado!" << endl;
-        return index;
+        cerr << "\n # Erro: Pedido nao encontrado!" << endl;
+        return -2;
     }
 
     if (current->next == nullptr) {
-        cout << "\n # Aviso: Voce ja esta no ultimo pedido!" << endl;
-        return index;
+        return head->data.getNumber();
     }
 
     return current->next->data.getNumber();
@@ -178,23 +178,22 @@ int HistoricDoublyLinkedList::nextOrder(int index) const {
 // exibe o pedido anterior
 int HistoricDoublyLinkedList::previousOrder(int index) const {
     if (isEmpty()) {
-        cout << "\n # ERRO: Lista vazia!" << endl;
-        return index;
+        cerr << "\n # Erro: Lista vazia!" << endl;
+        return -1;
     }
 
     NodeList* current = head;
     while (current != nullptr && current->data.getNumber() != index) {
         current = current->next;
     }
-
+    
     if (current == nullptr) {
-        cout << "\n # Erro: Pedido nao encontrado!" << endl;
-        return index;
+        cerr << "\n # Erro: Pedido nao encontrado!" << endl;
+        return -2;
     }
 
     if (current->previous == nullptr) {
-        cout << "\n # Aviso: Voce ja esta no primeiro pedido!" << endl;
-        return index;
+        return tail->data.getNumber();
     }
 
     return current->previous->data.getNumber();
@@ -202,55 +201,89 @@ int HistoricDoublyLinkedList::previousOrder(int index) const {
 
 // exibe todos os pedidos da lista
 void HistoricDoublyLinkedList::showOrders() const {
-    NodeList* current = head;
+    if (isEmpty()) {
+        cerr << "Erro: Lista vazia!" << endl;
+        return;
+    }
 
+    NodeList* current = head;
+    int quantatyOrders = 0, invoicing = 0;
+
+    cout << "============== LISTAGEM DE PEDIDOS =============" << endl;
     while (current != nullptr) {
-        current->data.showOrder();
-        cout << "| > Anterior: " << current->previous << endl;
-        cout << "| > Atual: " << current << endl;
-        cout << "| > Proximo: " << current->next << endl;
         
+        // Visualização detalhada pedido
+        cout << "-------------------------------------------" << endl;
+        current->data.showOrder();
+        cout << "-------------------------------------------" << endl;
+        
+        // Faturamento - somatório dos valores totais dos pedido
+        invoicing += current->data.getTotal();
+        
+        // Quantitade total de pedidos
+        quantatyOrders++;
+        
+        // Navega para o proximo pedido
         current = current->next;
     }
+
+    cout << " > Total de Pedidos: " << quantatyOrders << endl;
+    cout << " > Faturamento: R$" << invoicing << endl;
+
 }
 
 
 // Funções de Exibição de Menu
 
 void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
+    if (isEmpty()) {
+        cout << "\n # Aviso: O historico de pedidos esta vazio!" << endl;
+        return;
+    }
+
     int optionHistorico;
-    int historicIndex = 1;
+    int indexHistoric = head->data.getNumber();
 
     do {
+        TerminalUtils::clear();
         cout << "\n============= HISTORICO DE PEDIDOS =============" << endl;
-
-        this->search(historicIndex);
-
+        this->search(indexHistoric);
         cout << "------------------------------------------------" << endl;
         cout << "| [1] Anterior   [0] Voltar   [2] Proximo     |" << endl;
+        cout << "| [3] Exibir Relatorio                        |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
         cin >> optionHistorico;
 
         switch (optionHistorico) {
-            case 1:
-                historicIndex = this->previousOrder(historicIndex);
+            case 1: {
+                int prev = this->previousOrder(indexHistoric);
+                if (prev > 0) {
+                    indexHistoric = prev;
+                }
                 break;
+            }
 
-            case 2:
-                historicIndex = this->nextOrder(historicIndex);
+            case 2: {
+                int next = this->nextOrder(indexHistoric);
+                if (next > 0) {
+                    indexHistoric = next;
+                }
                 break;
+            }
 
             case 3:
+                TerminalUtils::clear();
                 this->showOrders();
+                TerminalUtils::pause();
                 break;
 
             case 0:
                 break;
 
             default:
-                cout << "\n # ERRO: Opcao invalida!" << endl;
+                cerr << "\n # Erro: Opcao invalida!" << endl;
                 break;
         }
 

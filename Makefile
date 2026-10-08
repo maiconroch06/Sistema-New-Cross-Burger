@@ -11,6 +11,7 @@ SRCS = main.cpp \
        service/Order.cpp \
        service/KitchenLinkedQueue.cpp \
        service/ActionsLinkedStack.cpp \
+       utils/TerminalUtils.cpp \
 
 # Gerar automaticamente a lista de arquivos .o
 OBJS = $(SRCS:.cpp=.o)

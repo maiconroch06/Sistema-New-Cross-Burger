@@ -32,7 +32,7 @@ class HistoricDoublyLinkedList {
         
         void showOrders() const;                    // exibe todos os pedidos da lista
 
-        // Funções do Menu Histórico
+        // Funções de Menu
         void menuExibirHistoricoPedidos();
 };
 
