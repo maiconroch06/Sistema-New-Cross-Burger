@@ -44,9 +44,9 @@ class KitchenLinkedQueue {
         void menuAddItem();
         void menuOperacoesBalcao();
         void menuRegisterOrder();
-        int menuRemoveOrder(int index);
-        void menuSearchOrder(int numberOrder);
-        void menuManageOrder(int numberOrder);
+        void menuRemoveOrder();
+        void menuSearchOrder();
+        void menuManageOrder();
 };
 
 #endif

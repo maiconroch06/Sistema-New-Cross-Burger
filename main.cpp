@@ -22,7 +22,7 @@ int main() {
     KitchenLinkedQueue kitchenLinkedQueueOrders;
 
     // Pedidos de exemplo
-    Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
+    /*Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
     Order order2(3, "Estudante", {"Pizza GG", "Coca Zero", "Sobremesa"}, 50.0f);
     Order order3(4, "Rocha", {"Milk Shake", "Batata Frita"}, 20.0f);
 
@@ -32,7 +32,7 @@ int main() {
 
     HistoricDoublyLinkedListOrders.insertEnd(order1);
     HistoricDoublyLinkedListOrders.insertEnd(order2);
-    HistoricDoublyLinkedListOrders.insertEnd(order3);
+    HistoricDoublyLinkedListOrders.insertEnd(order3);*/
 
     int optionMain;
     do {

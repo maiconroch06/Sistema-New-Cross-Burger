@@ -97,7 +97,7 @@ void KitchenLinkedQueue::showOrders() const {
     NodeQueue* current = head;
 
     while (current != nullptr) {
-        cout << "      Numero: " << current->data.getNumber() << endl;
+        cout << "    Numero: " << current->data.getNumber() << endl;
         cout << "      Clinte: " << current->data.getClient() << endl;
         if (current->next != nullptr) cout << "------------------------------------------------" << endl;
         current = current->next;
@@ -193,7 +193,7 @@ void KitchenLinkedQueue::removeOrder(int index) {
 
 // Funções de Exibição de Menu
 void KitchenLinkedQueue::menuOperacoesBalcao() {
-    int option, numberOrder;
+    int option;
     
     do {
         TerminalUtils::clear();
@@ -207,11 +207,6 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
         cin >> option;
-
-        if (option == 2 || option == 3 || option == 4) {
-            cout << "\n > Informe o pedido: ";
-            cin >> numberOrder;
-        }
         
         switch (option) {
             case 1:
@@ -220,13 +215,14 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
                 break;
             case 2:
                 // Inativa um pedido
-                menuRemoveOrder(numberOrder);
+                menuRemoveOrder();
                 break;
-            case 3: 
-                menuManageOrder(numberOrder);
+            case 3:
+
+                menuManageOrder();
                 break;
             case 4: 
-                menuSearchOrder(numberOrder);
+                menuSearchOrder();
                 break;
             case 0:
                 cout << "\nOperacao cancelada." << endl;
@@ -250,7 +246,7 @@ void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
         }
     }
     if (vazio) {
-        cout << "   (Nenhum item no carrinho)" << endl;
+        cout << "           (Nenhum item no carrinho)" << endl;
     }
     cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 }
@@ -273,7 +269,7 @@ void KitchenLinkedQueue::menuRegisterOrder() {
         // Exibe o carrinho simples
         carrinho(quantatyItems);
 
-        cout << "============= CADASTRAR PEDIDO =================" << endl;
+        cout << "=============== CADASTRAR PEDIDO ===============" << endl;
         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
         cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
@@ -290,41 +286,50 @@ void KitchenLinkedQueue::menuRegisterOrder() {
             case 1:
                 items.push_back("Cachorro Quente");
                 quantatyItems[0]++; // Incrementa direto na opcao escolhida
-                cout << "\nItem adicionado!" << endl;
+                //cout << "\nItem adicionado!" << endl;
+                //TerminalUtils::pause();
                 break;
-
-            case 2:
+                
+                case 2:
                 items.push_back("Batata Frita");
                 quantatyItems[1]++;
-                cout << "\nItem adicionado!" << endl;
+                //cout << "\nItem adicionado!" << endl;
+                //TerminalUtils::pause();
                 break;
-
-            case 3:
+                
+                case 3:
                 items.push_back("Hamburguer");
                 quantatyItems[2]++;
-                cout << "\nItem adicionado!" << endl;
+                //cout << "\nItem adicionado!" << endl;
+                //TerminalUtils::pause();
                 break;
-
-            case 4:
+                
+                case 4:
                 items.push_back("Pizza");
                 quantatyItems[3]++;
-                cout << "\nItem adicionado!" << endl;
+                //cout << "\nItem adicionado!" << endl;
+                //TerminalUtils::pause();
                 break;
-
-            case 5:
+                
+                case 5:
                 items.push_back("Coca Zero");
                 quantatyItems[4]++;
-                cout << "\nItem adicionado!" << endl;
+                //cout << "\nItem adicionado!" << endl;
+                //TerminalUtils::pause();
                 break;
-
-            case 10: {
-                if (items.empty()) {
-                    cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
+                
+                case 10: {
+                    if (items.empty()) {
+                        cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
                 } else {
                     Order order(client, items, quantatyItems);
                     this->enqueue(order);
                     
-                    cout << "\nPedido cadastrado com sucesso!" << endl;
+                    TerminalUtils::clear();
+                    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+                    cout << "          Pedido cadastrado com sucesso!        " << endl;
+                    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+                    TerminalUtils::pause();
                     optionCadastrar = 0;
                 }
                 break;
@@ -343,11 +348,24 @@ void KitchenLinkedQueue::menuRegisterOrder() {
 }
 
 
-int KitchenLinkedQueue::menuRemoveOrder(int index) {
-    int optionRemove;
+void KitchenLinkedQueue::menuRemoveOrder() {
+    if (this->isEmpty()) {  // Caso a lista esteja vazia
+        cout << " # Lista Vazia! #" << endl;
+        cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
+        TerminalUtils::pause();
+        return;
+    }
+
+    int optionRemove, numberOrder;
+    
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
+    
     do {
         TerminalUtils::clear();
         cout << "================ REMOVER PEDIDO ================" << endl;
+        this->search(numberOrder);
+        cout << "------------------------------------------------" << endl;
         cout << " #    Deseja confirmar a remocao do pedido?   # " << endl;
         cout << "------------------------------------------------" << endl;
         cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
@@ -358,8 +376,8 @@ int KitchenLinkedQueue::menuRemoveOrder(int index) {
 
         switch (optionRemove) {
             case 1: {
-                this->removeOrder(index);
-                return 0;
+                this->removeOrder(numberOrder);
+                return;
             }
             case 0:
                 cout << "\nOperacao cancelada." << endl;
@@ -370,23 +388,42 @@ int KitchenLinkedQueue::menuRemoveOrder(int index) {
                 break;
         }
     } while (optionRemove != 0);
-    return 0;
+    return;
 }
 
-void KitchenLinkedQueue::menuSearchOrder(int numberOrder) {
-    if (isEmpty()) {
-        cerr << "\n Fila de Pedidos Vazia!" << endl;
+void KitchenLinkedQueue::menuSearchOrder() {
+    if (this->isEmpty()) {  // Caso a lista esteja vazia
+        cout << " # Lista Vazia! #" << endl;
+        cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
+        TerminalUtils::pause();
         return;
     }
 
+    int numberOrder;
+    
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
+
     TerminalUtils::clear();
+    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
     this->search(numberOrder);
+    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
     TerminalUtils::pause();
     
 }
 
-void KitchenLinkedQueue::menuManageOrder(int numberOrder) {
-    int optionManagerOrder;
+void KitchenLinkedQueue::menuManageOrder() {
+    if (this->isEmpty()) {  // Caso a lista esteja vazia
+        cout << " # Lista Vazia! #" << endl;
+        cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
+        TerminalUtils::pause();
+        return;
+    }
+
+    int optionManagerOrder, numberOrder;
+    
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
     
     do {
         TerminalUtils::clear();
