@@ -58,10 +58,10 @@ void KitchenLinkedQueue::dequeue() {
     quantatyOrders--;
 }
 
-void KitchenLinkedQueue::search(int number) const {
+int KitchenLinkedQueue::search(int number) const {
     if (isEmpty()) {
-        cerr << "\n # Erro: Fila vazia!" << endl;
-        return;
+        //cerr << " # Erro: Order not found (Search)!" << endl;
+        return -1;
     }
 
     NodeQueue* current = head;
@@ -70,11 +70,12 @@ void KitchenLinkedQueue::search(int number) const {
     }
 
     if (current == nullptr) {
-        cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
-        return;
+        //cerr << " # Erro: Pedido nao encontrado! (Search)" << endl;
+        return -2;
     }
 
     current->data.showOrder();
+    return 0;
 }
 
 // verifica se a fila está vazia
@@ -457,86 +458,94 @@ void KitchenLinkedQueue::menuManageOrder() {
 }
 
 
-// void KitchenLinkedQueue::menuAddItem() {
-//     // tenho que manipular o pedido selecionado, então preciso do número do pedido
-//     int numberOrder;
-//     cout << "\nInforme o numero do pedido para adicionar item: ";
-//     cin >> numberOrder;
+/*void menuAddItem(KitchenLinkedQueue kitchenLinkedQueue) {
+    if (kitchenLinkedQueue.isEmpty()) {  // Caso a lista esteja vazia
+        cout << " # Lista Vazia! #" << endl;
+        cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
+        TerminalUtils::pause();
+        return;
+    }
 
-//     // dessa forma, consigo acessar o pedido selecionado e acessar um item a ele
-//     // mas devo fazer uma busca na lista de pedidos para encontrar o pedido correto e adicionar o item a ele
-//     // essa função tem que me retornar o objeto pedido que selecionei, remove-lo da queue e aguardar para adicionar o objeto pedido novo
+    int optionAddItem, numberOrder;
+    
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
 
-//     vector<string> items;
 
-//     int optionAddItem;
-//     do {
-//         TerminalUtils::clear();
+    // dessa forma, consigo acessar o pedido selecionado e acessar um item a ele
+    // mas devo fazer uma busca na lista de pedidos para encontrar o pedido correto e adicionar o item a ele
+    // essa função tem que me retornar o objeto pedido que selecionei, remove-lo da queue e aguardar para adicionar o objeto pedido novo
+    Order order = search(numberOrder);
+    string client = order.getClient();
+    vector<string> items = order.getItems();
 
-//         cout << "\n========= ADICIONAR ITEM AO PEDIDO =============" << endl;
-//         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
-//         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
-//         cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
-//         cout << "| [4] Pizza                   R$ 46.00         |" << endl;
-//         cout << "| [5] Coca Zero               R$ 12.00         |" << endl;
-//         cout << "------------------------------------------------" << endl;
-//         cout << "| [10] Finalizar Pedido         [0] Cancelar   |" << endl;
-//         cout << "================================================" << endl;
-//         cout << " > Escolha uma opcao: ";
+    do {
+        TerminalUtils::clear();
+        order.showOrder();
+        cout << "=========== ADICIONAR ITEM AO PEDIDO ===========" << endl;
+        cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
+        cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
+        cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
+        cout << "| [4] Pizza                   R$ 46.00         |" << endl;
+        cout << "| [5] Coca Zero               R$ 12.00         |" << endl;
+        cout << "------------------------------------------------" << endl;
+        cout << "| [10] Finalizar Pedido         [0] Cancelar   |" << endl;
+        cout << "================================================" << endl;
+        cout << " > Escolha uma opcao: ";
 
-//         cin >> optionAddItem;
+        cin >> optionAddItem;
 
-//         switch (optionAddItem) {
+        switch (optionAddItem) {
 
-//             case 1:
-//                 items.push_back("Cachorro Quente");
-//                 cout << "\nItem adicionado!" << endl;
-//                 break;
+            case 1:
+                items.push_back("Cachorro Quente");
+                cout << "\nItem adicionado!" << endl;
+                break;
 
-//             case 2:
-//                 items.push_back("Batata Frita");
-//                 cout << "\nItem adicionado!" << endl;
-//                 break;
+            case 2:
+                items.push_back("Batata Frita");
+                cout << "\nItem adicionado!" << endl;
+                break;
 
-//             case 3:
-//                 items.push_back("Hamburguer");
-//                 cout << "\nItem adicionado!" << endl;
-//                 break;
+            case 3:
+                items.push_back("Hamburguer");
+                cout << "\nItem adicionado!" << endl;
+                break;
 
-//             case 4:
-//                 items.push_back("Pizza");
-//                 cout << "\nItem adicionado!" << endl;
-//                 break;
+            case 4:
+                items.push_back("Pizza");
+                cout << "\nItem adicionado!" << endl;
+                break;
 
-//             case 5:
-//                 items.push_back("Coca Zero");
-//                 cout << "\nItem adicionado!" << endl;
-//                 break;
+            case 5:
+                items.push_back("Coca Zero");
+                cout << "\nItem adicionado!" << endl;
+                break;
 
-//             case 10: {
-//                 if (items.empty()) {
-//                     cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
-//                 } else {
-//                     Order order(client, items);
+            case 10: {
+                if (items.empty()) {
+                    cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
+                } else {
+                    Order order(client, items);
 
-//                     this->enqueue(order);
-//                     this->insertEnd(order);
+                    kitchenLinkedQueue.enqueue(order);
+                    kitchenLinkedQueue.insertEnd(order);
 
-//                     cout << "\nPedido cadastrado com sucesso!" << endl;
+                    cout << "\nPedido cadastrado com sucesso!" << endl;
 
-//                     optionAddItem = 0;
-//                 }
-//                 break;
-//             }
+                    optionAddItem = 0;
+                }
+                break;
+            }
 
-//             case 0:
-//                 cout << "\nCadastro cancelado." << endl;
-//                 break;
+            case 0:
+                cout << "\nCadastro cancelado." << endl;
+                break;
 
-//             default:
-//                 cout << "\n # Erro: Opcao invalida!" << endl;
-//                 break;
-//         }
+            default:
+                cout << "\n # Erro: Opcao invalida!" << endl;
+                break;
+        }
 
-//     } while (optionAddItem != 0);
-// }
+    } while (optionAddItem != 0);
+}*/

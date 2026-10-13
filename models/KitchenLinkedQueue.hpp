@@ -24,7 +24,7 @@ class KitchenLinkedQueue {
         void enqueue(Order& order);       // insere um novo elemento no final da fila
         void dequeue();                   // remove o primeiro elemento da fila
 
-        void search(int number) const;
+        int search(int number) const;
         
         void addItem(int number);     // vai adicionar um ou mais item na lista de itens um pedido especifico
         void popItem(int number);     // vai remover um ou mais item na lista de itens um pedido especifico
