@@ -24,8 +24,9 @@ class KitchenLinkedQueue {
         void enqueue(Order& order);       // insere um novo elemento no final da fila
         void dequeue();                   // remove o primeiro elemento da fila
 
-        int search(int number) const;
-        
+        NodeQueue* search(int number);
+        //int search(int number) const;  função antiga
+         
         void addItem(int number);     // vai adicionar um ou mais item na lista de itens um pedido especifico
         void popItem(int number);     // vai remover um ou mais item na lista de itens um pedido especifico
 
@@ -41,7 +42,7 @@ class KitchenLinkedQueue {
         void carrinho(const vector<int>& quantatyItems);
 
         // Funções de Menu
-        void menuAddItem();
+        void menuAddItem(int numberOrder);
         void menuOperacoesBalcao();
         void menuRegisterOrder();
         void menuRemoveOrder();
