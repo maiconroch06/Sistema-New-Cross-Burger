@@ -42,6 +42,8 @@ class KitchenLinkedQueue {
 
         void carrinho(const vector<int>& quantatyItems);
 
+        void prepareOrder(HistoricDoublyLinkedList& historicList);
+
         // Funções de Menu
         void menuOperacoesBalcao();
         void menuRegisterOrder();
@@ -49,10 +51,11 @@ class KitchenLinkedQueue {
         void menuSearchOrder();
         void menuManageOrder();
         void menuAddItem(int numberOrder);
-        void menuRemoveItem(int numberOrder);
+        int menuRemoveItem(int numberOrder);
 
 
-        void menuKitchen(HistoricDoublyLinkedList historicList);
+        void menuKitchen(HistoricDoublyLinkedList& historicList);
+        void menuCounterOrders();
 };
 
 #endif

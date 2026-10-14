@@ -236,7 +236,7 @@ void HistoricDoublyLinkedList::showOrders() const {
 // Funções de Exibição de Menu
 
 void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
-    if (isEmpty()) {
+    if (this->isEmpty()) {
         cout << "\n # Aviso: O historico de pedidos esta vazio!" << endl;
         return;
     }

@@ -10,7 +10,7 @@ KitchenLinkedQueue::KitchenLinkedQueue() {
     head = nullptr;
     tail = nullptr;
     quantatyOrders = 0;
-    //counterOrders;
+    counterOrders = LinkedStack();
 }
 
 // Destrutor
@@ -429,7 +429,7 @@ void KitchenLinkedQueue::menuManageOrder() {
                 menuAddItem(numberOrder);
                 break;
             case 2:
-                menuRemoveItem(numberOrder);
+                optionManagerOrder = menuRemoveItem(numberOrder);
                 break;
             case 3:
                 undoOrder(numberOrder);
@@ -495,11 +495,13 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
     } while (optionAddItem != 0 && optionAddItem != 10);
 }
 
-void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
+// Retorno 1: Quando o pedido a ser salvo é o alterado 
+// Retorno 0: Quando o pedido a ser salvo é o não alterado
+int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
     if (this->isEmpty()) {
-        cout << " # Lista Vazia! #" << endl;
+        cout << " # Fila Vazia! #" << endl;
         TerminalUtils::pause();
-        return;
+        return 0;
     }
 
     // Busca o nó na fila
@@ -509,10 +511,11 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
     if (node == nullptr) {
         cout << "\n # Erro: Pedido nao encontrado! #" << endl;
         TerminalUtils::pause();
-        return;
+        return 0;
     }
 
     int optionAddItem;
+    Order orderBackup = node->data;
     int orderNumber = node->data.getNumber();
     vector<string> items = node->data.getItems();
 
@@ -534,7 +537,8 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
         cin >> optionAddItem;
 
         if (optionAddItem == 0) {
-
+            node->data = orderBackup;
+            return 1;
         } else if (optionAddItem >= 1 && optionAddItem <= 5) {
             // salva estado para na pilha
             node->orderChanges.push(node->data);
@@ -543,55 +547,96 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
             node->data.removeItem(optionAddItem - 1);
             if(node->data.getItems().empty()) {
                 this->removeOrder(orderNumber);
-                return;
+                return 0;
             }
         }
 
+    } while (optionAddItem != 0 || optionAddItem != 10);
+    return 1;
+}
 
+void KitchenLinkedQueue::prepareOrder(HistoricDoublyLinkedList& historicList) {
+    if (this->isEmpty()) {
+        cout << " # Fila Vazia! #" << endl;
+        TerminalUtils::pause();
+    }
 
-    } while (optionAddItem != 0 && optionAddItem != 10);
+    Order order = this->head->data;
+    order.showOrder();
+    TerminalUtils::pause();
+    counterOrders.push(order);
+    historicList.insertEnd(order);
+    this->dequeue();
 }
 
 
+void KitchenLinkedQueue::menuKitchen(HistoricDoublyLinkedList& historicList) {
+    if (this->isEmpty()) {
+        cout << " # Fila Vazia! #" << endl;
+        cout << " # Aguarde novos pedidos! #";
+        TerminalUtils::pause();
+        return;
+    }
 
-// void KitchenLinkedQueue::menuKitchen(HistoricDoublyLinkedList historicList) {
-//     if (this->isEmpty()) {
-//         cout << " # Lista Vazia! #" << endl;
-//         cout << " # Aguarde novos pedidos! #";
-//         TerminalUtils::pause();
-//         return;
-//     }
+    int option;
 
-//     int option, numberOrder;
+    do {
+        TerminalUtils::clear();
+        cout << "=============== PREPARAR PEDIDOS ===============" << endl;
+        this->showOrders();
+        cout << "------------------------------------------------" << endl;
+        cout << "| [1] Preparar                  [0] Sair       |" << endl;
+        cout << "================================================" << endl;
 
-//     // cout << "\n > Informe o pedido: ";
-//     // cin >> numberOrder;
+        cout << "Escolher opcao: ";
+        cin >> option;
 
-//     do {
-//         TerminalUtils::clear();
-//         cout << "=============== PEDIDOS PRONTOS ===============" << endl;
-//         counterOrders.showCounterOrders();
-//         // NodeStack* node =
-//         // if (node == nullptr) {
-//         //     cout << "\n # Pedido nao encontrado! #" << endl;
-//         //     cout << "================================================" << endl;
-//         //     TerminalUtils::pause();
-//         //     return;
-//         // }
+        switch (option) {
+            case 1: {
+                prepareOrder(historicList);
+                break;
+            }
+            case 0:
+                return;
+        default:
+            break;
+        }
 
-//         historicList.showOrders();
-//         cout << "------------------------------------------------" << endl;
-//         cout << "| [1] Preparar Pedido          [0] Sair        |" << endl;
-//         cout << "| [2] Cancelar Preparo                         |" << endl;
-//         cout << "================================================" << endl;
+    } while (option != 0);
+}
 
-//         if (option >= 1 && option <= 2) {
-//             cout << "\n > Informe o pedido: ";
-//             cin >> numberOrder;
 
-            
+void KitchenLinkedQueue::menuCounterOrders() {
+    if (this->counterOrders.isEmpty()) {
+        cout << " # Pilha Vazia! #" << endl;
+        cout << " # Aguarde novos pedidos! #";
+        TerminalUtils::pause();
+        return;
+    }
 
-//         }
+    int option;
 
-//     } while (option != 0);
-// }
+    do {
+        TerminalUtils::clear();
+        cout << "=============== PEDIDOS PRONTOS ===============" << endl;
+        this->counterOrders.showCounterOrders();
+        cout << "------------------------------------------------" << endl;
+        cout << "| [1] Entregar                  [0] Sair       |" << endl;
+        cout << "================================================" << endl;
+
+        cout << "Escolher opcao: ";
+        cin >> option;
+
+        switch (option) {
+            case 1: {
+                this->counterOrders.pop();
+                break;
+            }
+            case 0:
+                return;
+        default:
+            break;
+        }
+
+    } while (option != 0);
+}  

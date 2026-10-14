@@ -18,7 +18,7 @@ int menuPrincipal();
     void exibirHistoricOrders();
 
 int main() {
-    HistoricDoublyLinkedList DoublyLinkedListOrders;
+    HistoricDoublyLinkedList DoublyLinkedListOrders = HistoricDoublyLinkedList();
     KitchenLinkedQueue kitchenLinkedQueueOrders;
 
     // Pedidos de exemplo
@@ -44,9 +44,12 @@ int main() {
                 kitchenLinkedQueueOrders.menuOperacoesBalcao();
                 break;
             case 2:
-                //kitchenLinkedQueueOrders.menuKitchen(DoublyLinkedListOrders);
+                kitchenLinkedQueueOrders.menuKitchen(DoublyLinkedListOrders);
                 break;
             case 3:
+                kitchenLinkedQueueOrders.menuCounterOrders();
+                break;
+            case 4:
                 DoublyLinkedListOrders.menuExibirHistoricOrders();
                 break;
             case 0:
@@ -69,8 +72,8 @@ int menuPrincipal() {
     cout << "============= NEW CROSS BURGER =============" << endl;
     cout << "| [1] Operacoes do Pedido                  |" << endl;
     cout << "| [2] Operacoes da Cozinha                 |" << endl;
-    cout << "| [3] Exibir Historico de Pedidos          |" << endl;
-    cout << "| [4] Pedidos do Balcao                    |" << endl;
+    cout << "| [3] Pedidos do Balcao                    |" << endl;
+    cout << "| [4] Exibir Historico de Pedidos          |" << endl;
     cout << "| [0] Sair                                 |" << endl;
     cout << "============================================" << endl;
     cout << " > Escolha uma opcao: ";
