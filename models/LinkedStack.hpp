@@ -19,7 +19,7 @@ class LinkedStack {
         void push(const Order& order);  // Adicionar ação na pilha
         Order pop();                    // Remover ação na pilha
 
-        int peek() const;               // Buscar primeir pidido na pilha
+        Order peek() const;               // Buscar primeir pidido na pilha
         bool isEmpty() const;           // Verificar se a pilha está vaz
 
         void showCounterOrders() const;

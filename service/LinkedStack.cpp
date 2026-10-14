@@ -44,14 +44,13 @@ Order LinkedStack::pop() {
     return orderRemove;
 }
 
-int LinkedStack::peek() const {
+Order LinkedStack::peek() const {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
-        return -1;
+        return Order();
     }
 
-    top->data.showOrder();
-    return 0;
+    return top->data;
 }
 
 bool LinkedStack::isEmpty() const {
