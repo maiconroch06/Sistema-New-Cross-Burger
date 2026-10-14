@@ -2,9 +2,9 @@
 #include <vector>
 
 #include "models/Order.hpp"
-#include "models/ActionsLinkedStack.hpp"
-#include "models/HistoricDoublyLinkedList.hpp"
-#include "models/KitchenLinkedQueue.hpp"
+#include "models/LinkedStack.hpp"
+#include "models/DoublyLinkedList.hpp"
+#include "models/LinkedQueue.hpp"
 
 #include "utils/TerminalUtils.hpp"
 
@@ -15,11 +15,11 @@ int menuPrincipal();
     void operacoesBalcao();
     void cadastrarPedido();
     void removerPedido();
-    void exibirHistoricoPedidos();
+    void exibirHistoricOrders();
 
 int main() {
-    HistoricDoublyLinkedList HistoricDoublyLinkedListOrders;
-    KitchenLinkedQueue kitchenLinkedQueueOrders;
+    DoublyLinkedList DoublyLinkedListOrders;
+    LinkedQueue kitchenLinkedQueueOrders;
 
     // Pedidos de exemplo
     /*Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
@@ -30,9 +30,9 @@ int main() {
     kitchenLinkedQueueOrders.enqueue(order2);
     kitchenLinkedQueueOrders.enqueue(order3);
 
-    HistoricDoublyLinkedListOrders.insertEnd(order1);
-    HistoricDoublyLinkedListOrders.insertEnd(order2);
-    HistoricDoublyLinkedListOrders.insertEnd(order3);*/
+    DoublyLinkedListOrders.insertEnd(order1);
+    DoublyLinkedListOrders.insertEnd(order2);
+    DoublyLinkedListOrders.insertEnd(order3);*/
 
     int optionMain;
     do {
@@ -44,10 +44,10 @@ int main() {
                 kitchenLinkedQueueOrders.menuOperacoesBalcao();
                 break;
             case 2:
-                //kitchenLinkedQueueOrders.menuCozinha(HistoricDoublyLinkedListOrders);
+                kitchenLinkedQueueOrders.menuKitchen(DoublyLinkedListOrders);
                 break;
             case 3:
-                HistoricDoublyLinkedListOrders.menuExibirHistoricoPedidos();
+                DoublyLinkedListOrders.menuExibirHistoricOrders();
                 break;
             case 0:
                 cout << "\nSaindo do programa..." << endl;

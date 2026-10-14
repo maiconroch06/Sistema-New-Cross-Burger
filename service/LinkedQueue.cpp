@@ -1,18 +1,21 @@
-#include "../models/KitchenLinkedQueue.hpp"
-#include "../models/ActionsLinkedStack.hpp"
+#include "../models/LinkedStack.hpp"
+#include "../models/LinkedQueue.hpp"
+#include "../models/DoublyLinkedList.hpp"
 #include "../utils/TerminalUtils.hpp"
 
 using namespace std;
 
 // Construtor
-KitchenLinkedQueue::KitchenLinkedQueue() {
+LinkedQueue::LinkedQueue() {
     head = nullptr;
     tail = nullptr;
     quantatyOrders = 0;
+
+    counterOrders;
 }
 
 // Destrutor
-KitchenLinkedQueue::~KitchenLinkedQueue() {
+LinkedQueue::~LinkedQueue() {
     while (head != nullptr) {
         NodeQueue* nextNode = head->next;
         delete head;
@@ -21,7 +24,7 @@ KitchenLinkedQueue::~KitchenLinkedQueue() {
 }
 
 // insere um novo elemento no final da fila
-void KitchenLinkedQueue::enqueue(Order& order) {
+void LinkedQueue::enqueue(Order& order) {
     NodeQueue* newNode = new NodeQueue();
 
     int number = getQuantatyOrders() + 1;
@@ -42,7 +45,7 @@ void KitchenLinkedQueue::enqueue(Order& order) {
 }
 
 // remove o primeiro elemento da fila
-void KitchenLinkedQueue::dequeue() {
+void LinkedQueue::dequeue() {
     if (isEmpty()) {
         cerr << "\n # Erro: Fila vazia!" << endl;
         return;
@@ -59,7 +62,7 @@ void KitchenLinkedQueue::dequeue() {
     quantatyOrders--;
 }
 
-NodeQueue* KitchenLinkedQueue::search(int number) {
+NodeQueue* LinkedQueue::search(int number) {
     if (isEmpty()) {
         //cerr << " # Erro: Order not found (Search)!" << endl;
         return nullptr;
@@ -80,12 +83,12 @@ NodeQueue* KitchenLinkedQueue::search(int number) {
 }
 
 // verifica se a fila está vazia
-bool KitchenLinkedQueue::isEmpty() const {
+bool LinkedQueue::isEmpty() const {
     return (head == nullptr);
 }
 
 // retorna o valor do primeiro elemento da fila sem removê-lo
-int KitchenLinkedQueue::peek() const {
+int LinkedQueue::peek() const {
     if (isEmpty()) {
         cerr << "\n # Erro: Fila vazia!" << endl;
         return -1;
@@ -94,7 +97,7 @@ int KitchenLinkedQueue::peek() const {
     return 0;
 }
 
-void KitchenLinkedQueue::undoOrder(int numberOrder) {
+void LinkedQueue::undoOrder(int numberOrder) {
     if (this->isEmpty()) {
         cout << " # Lista Vazia! #" << endl;
         TerminalUtils::pause();
@@ -111,20 +114,20 @@ void KitchenLinkedQueue::undoOrder(int numberOrder) {
         return;
     }
 
-    if (node->stackOrders.peek() != -1) {
+    if (node->orderChanges.peek() != -1) {
         cerr << " Operacao cancelada! Nenhuma alteracao do pedido encontrada.";
         TerminalUtils::pause();
         return;
     }
 
-    node->data = node->stackOrders.pop();
+    node->data = node->orderChanges.pop();
     cout << "\n> Ultima alteracao desfeita com sucesso!" << endl;
     TerminalUtils::pause();
 }
 
 
 // exibe todos os pedidos da lista, porém, mostra apenas o número do pedido e o nome do cliente
-void KitchenLinkedQueue::showOrders() const {
+void LinkedQueue::showOrders() const {
     NodeQueue* current = head;
 
     while (current != nullptr) {
@@ -135,15 +138,15 @@ void KitchenLinkedQueue::showOrders() const {
     }
 }
 
-int KitchenLinkedQueue::getQuantatyOrders() const {
+int LinkedQueue::getQuantatyOrders() const {
     return quantatyOrders;
 }
 
-void KitchenLinkedQueue::setQuantatyOrders(int quantatyOrders) {
+void LinkedQueue::setQuantatyOrders(int quantatyOrders) {
     this->quantatyOrders = quantatyOrders;
 }
 
-void KitchenLinkedQueue::removeOrder(int index) {
+void LinkedQueue::removeOrder(int index) {
     if (isEmpty()) {
         cerr << "\n # Erro: Fila vazia!" << endl;
         return;
@@ -180,9 +183,9 @@ void KitchenLinkedQueue::removeOrder(int index) {
 }
 
 // Funções de Exibição de Menu
-void KitchenLinkedQueue::menuOperacoesBalcao() {
+void LinkedQueue::menuOperacoesBalcao() {
     int option;
-    
+
     do {
         TerminalUtils::clear();
 
@@ -195,7 +198,7 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
         cin >> option;
-        
+
         switch (option) {
             case 1:
                 // Adicionar Novo Pedido
@@ -208,7 +211,7 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
             case 3:
                 menuManageOrder();
                 break;
-            case 4: 
+            case 4:
                 menuSearchOrder();
                 break;
             case 0:
@@ -221,9 +224,9 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
     } while (option != 0);
 }
 
-void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
+void LinkedQueue::carrinho(const vector<int>& quantatyItems) {
     vector<string> menuNames = {"Cachorro Quente", "Batata Frita", "Hamburguer", "Pizza", "Coca Zero"};
-    
+
     cout << "=-=-=-=-=-=-=-=  CARRINHO ATUAL  =-=-=-=-=-=-=-=" << endl;
     bool vazio = true;
     for (size_t i = 0; i < menuNames.size(); ++i) {
@@ -238,11 +241,11 @@ void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
     cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
 }
 
-void KitchenLinkedQueue::menuRegisterOrder() {
+void LinkedQueue::menuRegisterOrder() {
     vector<string> items;
     vector<int> quantatyItems = {0, 0, 0, 0, 0};
     string client;
-    
+
     TerminalUtils::clear();
     cout << "=-=-=-=-=-=-= NOVO PEDIDO =-=-=-=-=-=-=" << endl;
     cout << " > Nome Cliente: ";
@@ -274,34 +277,34 @@ void KitchenLinkedQueue::menuRegisterOrder() {
                 items.push_back("Cachorro Quente");
                 quantatyItems[0]++; // Incrementa direto na opcao escolhida
                 break;
-                
+
             case 2:
                 items.push_back("Batata Frita");
                 quantatyItems[1]++;
                 break;
-                
+
             case 3:
                 items.push_back("Hamburguer");
                 quantatyItems[2]++;
                 break;
-                
+
             case 4:
                 items.push_back("Pizza");
                 quantatyItems[3]++;
                 break;
-                
+
             case 5:
                 items.push_back("Coca Zero");
                 quantatyItems[4]++;
                 break;
-                
+
             case 10: {
                 if (items.empty()) {
                     cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
                 } else {
                     Order order(client, items, quantatyItems);
                     this->enqueue(order);
-                    
+
                     TerminalUtils::clear();
                     cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
                     cout << "          Pedido cadastrado com sucesso!        " << endl;
@@ -325,7 +328,7 @@ void KitchenLinkedQueue::menuRegisterOrder() {
 }
 
 
-void KitchenLinkedQueue::menuRemoveOrder() {
+void LinkedQueue::menuRemoveOrder() {
     if (this->isEmpty()) {  // Caso a lista esteja vazia
         cout << " # Lista Vazia! #" << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
@@ -334,10 +337,10 @@ void KitchenLinkedQueue::menuRemoveOrder() {
     }
 
     int optionRemove, numberOrder;
-    
+
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
-    
+
     do {
         TerminalUtils::clear();
         cout << "================ REMOVER PEDIDO ================" << endl;
@@ -348,7 +351,7 @@ void KitchenLinkedQueue::menuRemoveOrder() {
         cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
-        
+
         cin >> optionRemove;
 
         switch (optionRemove) {
@@ -368,7 +371,7 @@ void KitchenLinkedQueue::menuRemoveOrder() {
     return;
 }
 
-void KitchenLinkedQueue::menuSearchOrder() {
+void LinkedQueue::menuSearchOrder() {
     if (this->isEmpty()) {  // Caso a lista esteja vazia
         cout << " # Lista Vazia! #" << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
@@ -377,7 +380,7 @@ void KitchenLinkedQueue::menuSearchOrder() {
     }
 
     int numberOrder;
-    
+
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
 
@@ -386,10 +389,10 @@ void KitchenLinkedQueue::menuSearchOrder() {
     this->search(numberOrder);
     cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
     TerminalUtils::pause();
-    
+
 }
 
-void KitchenLinkedQueue::menuManageOrder() {
+void LinkedQueue::menuManageOrder() {
     if (this->isEmpty()) {
         cout << " # Lista Vazia! #" << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! #";
@@ -398,15 +401,15 @@ void KitchenLinkedQueue::menuManageOrder() {
     }
 
     int optionManagerOrder, numberOrder;
-    
+
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
-    
+
     do {
         TerminalUtils::clear();
         cout << "=============== GERENCIAR PEDIDO ===============" << endl;
         NodeQueue* node = this->search(numberOrder);
-        
+
         if (node == nullptr) {
             cout << "\n # Pedido nao encontrado! #" << endl;
             cout << "================================================" << endl;
@@ -421,7 +424,7 @@ void KitchenLinkedQueue::menuManageOrder() {
         cout << " > Escolha uma opcao: ";
 
         cin >> optionManagerOrder;
-        
+
         switch (optionManagerOrder) {
             case 1:
                 menuAddItem(numberOrder);
@@ -444,7 +447,7 @@ void KitchenLinkedQueue::menuManageOrder() {
 }
 
 
-void KitchenLinkedQueue::menuAddItem(int numberOrder) {
+void LinkedQueue::menuAddItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << " # Lista Vazia! #" << endl;
         TerminalUtils::pause();
@@ -484,16 +487,16 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
 
         if (optionAddItem >= 1 && optionAddItem <= 5) {
             // salva estado para na pilha
-            node->stackOrders.push(node->data);
-            
+            node->orderChanges.push(node->data);
+
             // altera diretamente no pedido do nó
-            node->data.addItem(optionAddItem - 1); 
+            node->data.addItem(optionAddItem - 1);
         }
 
     } while (optionAddItem != 0 && optionAddItem != 10);
 }
 
-void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
+void LinkedQueue::menuRemoveItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << " # Lista Vazia! #" << endl;
         TerminalUtils::pause();
@@ -535,13 +538,57 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
 
         } else if (optionAddItem >= 1 && optionAddItem <= 5) {
             // salva estado para na pilha
-            node->stackOrders.push(node->data);
-            
+            node->orderChanges.push(node->data);
+
             // altera diretamente no pedido do nó
-            node->data.removeItem(optionAddItem - 1); 
+            node->data.removeItem(optionAddItem - 1);
         }
 
 
 
     } while (optionAddItem != 0 && optionAddItem != 10);
+}
+
+
+
+void LinkedQueue::menuKitchen(DoublyLinkedList historicList) {
+    if (this->isEmpty()) {
+        cout << " # Lista Vazia! #" << endl;
+        cout << " # Aguarde novos pedidos! #";
+        TerminalUtils::pause();
+        return;
+    }
+
+    int option, numberOrder;
+
+    // cout << "\n > Informe o pedido: ";
+    // cin >> numberOrder;
+
+    do {
+        TerminalUtils::clear();
+        cout << "=============== PEDIDOS PRONTOS ===============" << endl;
+        counterOrders.showCounterOrders();
+        // NodeStack* node =
+        // if (node == nullptr) {
+        //     cout << "\n # Pedido nao encontrado! #" << endl;
+        //     cout << "================================================" << endl;
+        //     TerminalUtils::pause();
+        //     return;
+        // }
+
+        historicList.showOrders();
+        cout << "------------------------------------------------" << endl;
+        cout << "| [1] Preparar Pedido          [0] Sair        |" << endl;
+        cout << "| [2] Cancelar Preparo                         |" << endl;
+        cout << "================================================" << endl;
+
+        if (option >= 1 && option <= 2) {
+            cout << "\n > Informe o pedido: ";
+            cin >> numberOrder;
+
+            
+
+        }
+
+    } while (option != 0);
 }

@@ -1,12 +1,12 @@
-#include "../models/ActionsLinkedStack.hpp"
+#include "../models/LinkedStack.hpp"
 
 using namespace std;
 
-ActionsLinkedStack::ActionsLinkedStack() {
+LinkedStack::LinkedStack() {
     top = nullptr;
 }
 
-ActionsLinkedStack::~ActionsLinkedStack() {
+LinkedStack::~LinkedStack() {
     while (top != nullptr) {
         NodeStack* nextNode = top->next;
         delete top;
@@ -14,7 +14,7 @@ ActionsLinkedStack::~ActionsLinkedStack() {
     }
 }
 
-void ActionsLinkedStack::push(const Order& order) {
+void LinkedStack::push(const Order& order) {
     NodeStack* newNode = new NodeStack();
     
     // Prepara o Nó
@@ -24,7 +24,7 @@ void ActionsLinkedStack::push(const Order& order) {
     top = newNode;
 }
 
-Order ActionsLinkedStack::pop() {
+Order LinkedStack::pop() {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
         return Order();
@@ -44,7 +44,7 @@ Order ActionsLinkedStack::pop() {
     return orderRemove;
 }
 
-int ActionsLinkedStack::peek() const {
+int LinkedStack::peek() const {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
         return -1;
@@ -54,6 +54,17 @@ int ActionsLinkedStack::peek() const {
     return 0;
 }
 
-bool ActionsLinkedStack::isEmpty() const {
+bool LinkedStack::isEmpty() const {
     return top == nullptr;
+}
+
+void LinkedStack::showCounterOrders() const {
+    NodeStack* current = top;
+
+    while (current != nullptr) {
+        cout << "    Numero: " << current->data.getNumber() << endl;
+        cout << "      Clinte: " << current->data.getClient() << endl;
+        if (current->next != nullptr) cout << "------------------------------------------------" << endl;
+        current = current->next;
+    }
 }

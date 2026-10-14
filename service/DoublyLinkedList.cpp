@@ -1,16 +1,16 @@
-#include "../models/HistoricDoublyLinkedList.hpp"
+#include "../models/DoublyLinkedList.hpp"
 #include "../utils/TerminalUtils.hpp"
 
 using namespace std;
 
 // construtor
-HistoricDoublyLinkedList::HistoricDoublyLinkedList() {
+DoublyLinkedList::DoublyLinkedList() {
     head = nullptr;
     tail = nullptr;
 }
 
 // destrutor
-HistoricDoublyLinkedList::~HistoricDoublyLinkedList() {
+DoublyLinkedList::~DoublyLinkedList() {
     while (head != nullptr) {
         NodeList* nextNode = head->next;
         delete head;
@@ -19,7 +19,7 @@ HistoricDoublyLinkedList::~HistoricDoublyLinkedList() {
 }
 
 // insere um novo pedido inserido no início
-void HistoricDoublyLinkedList::insert(Order& order) {
+void DoublyLinkedList::insert(Order& order) {
     NodeList* newNode = new NodeList();
     
     // Prepara o Nó
@@ -37,7 +37,7 @@ void HistoricDoublyLinkedList::insert(Order& order) {
 }
 
 // insere um pedido no final da lista
-void HistoricDoublyLinkedList::insertEnd(Order& order) {
+void DoublyLinkedList::insertEnd(Order& order) {
     NodeList* newNode = new NodeList();
     newNode->data = order;
     newNode->next = nullptr;
@@ -54,7 +54,7 @@ void HistoricDoublyLinkedList::insertEnd(Order& order) {
 }
 
 // insere um pedido em uma posição específica da lista
-void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
+void DoublyLinkedList::insertIndex(Order& order, int index) {
     // Caso a posição seja no inicio
     if (index == 0) {
         insert(order);
@@ -95,7 +95,7 @@ void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
 }
 
 // remove um pedido pelo número do pedido
-int HistoricDoublyLinkedList::removeValue(int number) {
+int DoublyLinkedList::removeValue(int number) {
     if (isEmpty()) {
         cerr << "\n # Erro: Lista vazia!" << endl;
         return -1;
@@ -127,7 +127,7 @@ int HistoricDoublyLinkedList::removeValue(int number) {
 }
 
 // busca um pedido pelo número do pedido
-int HistoricDoublyLinkedList::search(int number) const {
+int DoublyLinkedList::search(int number) const {
     if (isEmpty()) {
         cerr << "|          # Erro: Lista vazia!                 |" << endl;
         return -1;
@@ -147,12 +147,12 @@ int HistoricDoublyLinkedList::search(int number) const {
 }
 
 // verifica se a lista está vazia
-bool HistoricDoublyLinkedList::isEmpty() const {
+bool DoublyLinkedList::isEmpty() const {
     return head == nullptr;
 }
 
 // exibe o proximo pedido
-int HistoricDoublyLinkedList::nextOrder(int index) const {
+int DoublyLinkedList::nextOrder(int index) const {
     if (isEmpty()) {
         cerr << "\n # Erro: Lista vazia!" << endl;
         return -1;
@@ -176,7 +176,7 @@ int HistoricDoublyLinkedList::nextOrder(int index) const {
 }
 
 // exibe o pedido anterior
-int HistoricDoublyLinkedList::previousOrder(int index) const {
+int DoublyLinkedList::previousOrder(int index) const {
     if (isEmpty()) {
         cerr << "\n # Erro: Lista vazia!" << endl;
         return -1;
@@ -200,7 +200,7 @@ int HistoricDoublyLinkedList::previousOrder(int index) const {
 }
 
 // exibe todos os pedidos da lista
-void HistoricDoublyLinkedList::showOrders() const {
+void DoublyLinkedList::showOrders() const {
     if (isEmpty()) {
         cerr << "Erro: Lista vazia!" << endl;
         return;
@@ -235,13 +235,13 @@ void HistoricDoublyLinkedList::showOrders() const {
 
 // Funções de Exibição de Menu
 
-void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
+void DoublyLinkedList::menuExibirHistoricOrders() {
     if (isEmpty()) {
         cout << "\n # Aviso: O historico de pedidos esta vazio!" << endl;
         return;
     }
 
-    int optionHistorico;
+    int optionHistoric;
     int indexHistoric = head->data.getNumber();
 
     do {
@@ -254,9 +254,9 @@ void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
-        cin >> optionHistorico;
+        cin >> optionHistoric;
 
-        switch (optionHistorico) {
+        switch (optionHistoric) {
             case 1: {
                 int prev = this->previousOrder(indexHistoric);
                 if (prev > 0) {
@@ -287,5 +287,5 @@ void HistoricDoublyLinkedList::menuExibirHistoricoPedidos() {
                 break;
         }
 
-    } while (optionHistorico != 0);
+    } while (optionHistoric != 0);
 }

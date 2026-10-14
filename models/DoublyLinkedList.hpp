@@ -1,5 +1,5 @@
-#ifndef _HISTORIC_DOUBLY_LINKED_LIST_
-#define _HISTORIC_DOUBLY_LINKED_LIST_
+#ifndef _DOUBLY_LINKED_LIST_
+#define _DOUBLY_LINKED_LIST_
 
 #include <iostream>
 #include "Order.hpp"
@@ -10,14 +10,14 @@ struct NodeList {
     NodeList* previous;
 };
 
-class HistoricDoublyLinkedList {
+class DoublyLinkedList {
     private:
         NodeList* head;
         NodeList* tail;
         
     public:
-        HistoricDoublyLinkedList();
-        ~HistoricDoublyLinkedList();
+        DoublyLinkedList();
+        ~DoublyLinkedList();
 
         void insert(Order& order);                  // insere um novo pedido inserido no início
         void insertEnd(Order& order);               // insere um pedido no final da lista
@@ -33,7 +33,7 @@ class HistoricDoublyLinkedList {
         void showOrders() const;                    // exibe todos os pedidos da lista
 
         // Funções de Menu
-        void menuExibirHistoricoPedidos();
+        void menuExibirHistoricOrders();
 };
 
 #endif
