@@ -11,8 +11,8 @@ class Order {
 private:
     int number;
     string client;
-    vector<string> items;
-    vector<int> quantatyItems;
+    vector<string> items;       // ArrayList do C++
+    vector<int> quantatyItems; 
     float total;
 
 public:
@@ -26,6 +26,9 @@ public:
     void removeItem();
     void showOrder() const;
 
+    void addItem(int itemCode);
+    bool removeItem(int itemCode);
+
     float calcularTotal() const;
 
     int getNumber() const;
@@ -37,3 +40,12 @@ public:
 };
 
 #endif
+
+
+// <vector>
+// front(): Returns the value of the first element in the list.
+// back(): Returns the value of the last element in the list.
+// push_front(x): Adds a new element ‘x’ at the beginning of the list.
+// push_back(x): Adds a new element ‘x’ at the end of the list.
+// pop_front(): Removes the first element of the list, and reduces the size of the list by 1.
+// pop_back(): Removes the last element of the list, and reduces the size of the list by 1.

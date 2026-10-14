@@ -44,7 +44,6 @@ int main() {
                 kitchenLinkedQueueOrders.menuOperacoesBalcao();
                 break;
             case 2:
-                // Implementar operações da cozinha
                 //kitchenLinkedQueueOrders.menuCozinha(HistoricDoublyLinkedListOrders);
                 break;
             case 3:

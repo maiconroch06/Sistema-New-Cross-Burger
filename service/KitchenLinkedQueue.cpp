@@ -94,6 +94,35 @@ int KitchenLinkedQueue::peek() const {
     return 0;
 }
 
+void KitchenLinkedQueue::undoOrder(int numberOrder) {
+    if (this->isEmpty()) {
+        cout << " # Lista Vazia! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
+
+    // Busca o nó na fila
+    NodeQueue* node = this->search(numberOrder);
+
+    // Validação de ponteiro nulo
+    if (node == nullptr) {
+        cout << "\n # Erro: Pedido nao encontrado! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
+
+    if (node->stackOrders.peek() != -1) {
+        cerr << " Operacao cancelada! Nenhuma alteracao do pedido encontrada.";
+        TerminalUtils::pause();
+        return;
+    }
+
+    node->data = node->stackOrders.pop();
+    cout << "\n> Ultima alteracao desfeita com sucesso!" << endl;
+    TerminalUtils::pause();
+}
+
+
 // exibe todos os pedidos da lista, porém, mostra apenas o número do pedido e o nome do cliente
 void KitchenLinkedQueue::showOrders() const {
     NodeQueue* current = head;
@@ -150,49 +179,6 @@ void KitchenLinkedQueue::removeOrder(int index) {
     cout << "\nPedido removido com sucesso!" << endl;
 }
 
-
-
-// // Funções de Exibição de Menu
-// void KitchenLinkedQueue::menuOperacoesBalcao() {
-//     int option = 1, numberOrder = head->data.getNumber();
-    
-//     do {
-//         TerminalUtils::clear();
-
-//         cout << "=============== GERENCIAR PEDIDO ===============" << endl;
-//         this->search(numberOrder);
-//         cout << "------------------------------------------------" << endl;
-//         cout << "| [1] Adicionar Novo Pedido [4] Adicionar Item |" << endl;
-//         cout << "| [2] Remover Pedido        [5] Remover Item   |" << endl;
-//         cout << "| [3] Buscar Pedido         [0] Sair           |" << endl;
-//         cout << "================================================" << endl;
-//         cout << " > Escolha uma opcao: ";
-//         cin >> option;
-        
-//         // Se escolheu 1, 2 ou 3: usuario volta para selecionar um pedido da fila
-//         // Se escolheu 0: usuario volta para o menu de gerenciar pedido
-//         switch (option) {
-//             case 1:
-//                 // Adicionar Novo Pedido
-//                 menuRegisterOrder();
-//                 break;
-//             case 2:
-//                 // Inativa um pedido
-//                 numberOrder = menuRemoveOrder(numberOrder);
-//                 break;
-//             case 3: 
-//                 numberOrder = menuSearchOrder();
-//                 break;
-//             case 0:
-//                 cout << "\nOperacao cancelada." << endl;
-//                 break;
-//             default:
-//                 cout << "\n # Erro: Opcao invalida!" << endl;
-//                 break;
-//         }
-//     } while (option != 0);
-// }
-
 // Funções de Exibição de Menu
 void KitchenLinkedQueue::menuOperacoesBalcao() {
     int option;
@@ -220,7 +206,6 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
                 menuRemoveOrder();
                 break;
             case 3:
-
                 menuManageOrder();
                 break;
             case 4: 
@@ -288,41 +273,31 @@ void KitchenLinkedQueue::menuRegisterOrder() {
             case 1:
                 items.push_back("Cachorro Quente");
                 quantatyItems[0]++; // Incrementa direto na opcao escolhida
-                //cout << "\nItem adicionado!" << endl;
-                //TerminalUtils::pause();
                 break;
                 
-                case 2:
+            case 2:
                 items.push_back("Batata Frita");
                 quantatyItems[1]++;
-                //cout << "\nItem adicionado!" << endl;
-                //TerminalUtils::pause();
                 break;
                 
-                case 3:
+            case 3:
                 items.push_back("Hamburguer");
                 quantatyItems[2]++;
-                //cout << "\nItem adicionado!" << endl;
-                //TerminalUtils::pause();
                 break;
                 
-                case 4:
+            case 4:
                 items.push_back("Pizza");
                 quantatyItems[3]++;
-                //cout << "\nItem adicionado!" << endl;
-                //TerminalUtils::pause();
                 break;
                 
-                case 5:
+            case 5:
                 items.push_back("Coca Zero");
                 quantatyItems[4]++;
-                //cout << "\nItem adicionado!" << endl;
-                //TerminalUtils::pause();
                 break;
                 
-                case 10: {
-                    if (items.empty()) {
-                        cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
+            case 10: {
+                if (items.empty()) {
+                    cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
                 } else {
                     Order order(client, items, quantatyItems);
                     this->enqueue(order);
@@ -440,8 +415,8 @@ void KitchenLinkedQueue::menuManageOrder() {
         }
 
         cout << "------------------------------------------------" << endl;
-        cout << "| [1] Adicionar Item           [0] Voltar      |" << endl;
-        cout << "| [2] Remover Item                             |" << endl;
+        cout << "| [1] Adicionar Item           [3] Desfazer    |" << endl;
+        cout << "| [2] Remover Item             [0] Voltar      |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
@@ -449,12 +424,13 @@ void KitchenLinkedQueue::menuManageOrder() {
         
         switch (optionManagerOrder) {
             case 1:
-                // Adicionar Novo Item ao Pedido
-                menuAddItem(numberOrder); // Repassa o número do pedido diretamente
+                menuAddItem(numberOrder);
                 break;
             case 2:
-                // Remover Item do Pedido
-                // menuRemoveItem(numberOrder);
+                menuRemoveItem(numberOrder);
+                break;
+            case 3:
+                undoOrder(numberOrder);
                 break;
             case 0:
                 cout << "\nVoltando ao menu anterior." << endl;
@@ -486,94 +462,86 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
     }
 
     int optionAddItem;
-    vector<string> items = node->data.getItems();
-    vector<int> quantatyItems = node->data.getQuantatyItems();
     int orderNumber = node->data.getNumber();
+    vector<string> items = node->data.getItems();
 
     do {
         TerminalUtils::clear();
-        carrinho(quantatyItems);
+        carrinho(node->data.getQuantatyItems());
 
-        cout << "=========== ADICIONAR ITEM AO PEDIDO #" << orderNumber << " ===========" << endl;
+        cout << "================ ADICIONAR ITEM ================" << endl;
         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
         cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
         cout << "| [4] Pizza                   R$ 46.00         |" << endl;
         cout << "| [5] Coca Zero               R$ 12.00         |" << endl;
-        cout << "------------------------------------------------" << endl;
+        cout << "------------------- PEDIDO #" << orderNumber << " ------------------" << endl;
         cout << "| [10] Finalizar Alteracao     [0] Cancelar    |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
         cin >> optionAddItem;
 
-        switch (optionAddItem) {
-            case 1:
-                items.push_back("Cachorro Quente");
-                if (quantatyItems.size() > 0) {
-                    quantatyItems[0]++;
-                }
-                break;
-
-            case 2:
-                items.push_back("Batata Frita");
-                if (quantatyItems.size() > 1) {
-                    quantatyItems[1]++;
-                }
-                break;
-
-            case 3:
-                items.push_back("Hamburguer");
-                if (quantatyItems.size() > 2) {
-                    quantatyItems[2]++;
-                }
-                break;
-
-            case 4:
-                items.push_back("Pizza");
-                if (quantatyItems.size() > 3) {
-                    quantatyItems[3]++;
-                }
-                break;
-
-            case 5:
-                items.push_back("Coca Zero");
-                if (quantatyItems.size() > 4) {
-                    quantatyItems[4]++;
-                }
-                break;
-
-            case 10: {
-                if (items.empty()) {
-                    cout << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
-                    TerminalUtils::pause();
-                } else {
-                    // salva a versão anterior na pilha de histórico (Undo)
-                    node->stackOrders.push(node->data);
-
-                    // instancia o objeto atualizado com cliente, itens e quantidades
-                    Order updatedOrder(node->data.getClient(), items, quantatyItems);
-                    updatedOrder.setNumber(orderNumber); // define o número do pedido
-
-                    // sobrescreve o pedido atual na fila
-                    node->data = updatedOrder;
-
-                    cout << "\nPedido atualizado com sucesso!" << endl;
-                    TerminalUtils::pause();
-                    optionAddItem = 0;
-                }
-                break;
-            }
-
-            case 0:
-                cout << "\nOperacao cancelada." << endl;
-                break;
-
-            default:
-                cout << "\n # Erro: Opcao invalida!" << endl;
-                TerminalUtils::pause();
-                break;
+        if (optionAddItem >= 1 && optionAddItem <= 5) {
+            // salva estado para na pilha
+            node->stackOrders.push(node->data);
+            
+            // altera diretamente no pedido do nó
+            node->data.addItem(optionAddItem - 1); 
         }
 
-    } while (optionAddItem != 0);
+    } while (optionAddItem != 0 && optionAddItem != 10);
+}
+
+void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
+    if (this->isEmpty()) {
+        cout << " # Lista Vazia! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
+
+    // Busca o nó na fila
+    NodeQueue* node = this->search(numberOrder);
+
+    // Validação de ponteiro nulo
+    if (node == nullptr) {
+        cout << "\n # Erro: Pedido nao encontrado! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
+
+    int optionAddItem;
+    int orderNumber = node->data.getNumber();
+    vector<string> items = node->data.getItems();
+
+    do {
+        TerminalUtils::clear();
+        carrinho(node->data.getQuantatyItems());
+
+        cout << "================= REMOVER ITEM =================" << endl;
+        cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
+        cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
+        cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
+        cout << "| [4] Pizza                   R$ 46.00         |" << endl;
+        cout << "| [5] Coca Zero               R$ 12.00         |" << endl;
+        cout << "------------------- PEDIDO #" << orderNumber << " ------------------" << endl;
+        cout << "| [10] Finalizar Alteracao     [0] Cancelar    |" << endl;
+        cout << "================================================" << endl;
+        cout << " > Escolha uma opcao: ";
+
+        cin >> optionAddItem;
+
+        if (optionAddItem == 0) {
+
+        } else if (optionAddItem >= 1 && optionAddItem <= 5) {
+            // salva estado para na pilha
+            node->stackOrders.push(node->data);
+            
+            // altera diretamente no pedido do nó
+            node->data.removeItem(optionAddItem - 1); 
+        }
+
+
+
+    } while (optionAddItem != 0 && optionAddItem != 10);
 }

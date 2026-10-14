@@ -73,6 +73,21 @@ void Order::showOrder() const {
     cout << "   > Total: R$ " << this->getTotal() << endl;
 }
 
+void Order::addItem(int itemCode) {
+    // 0 - Cachorro Quente, 1 - Batata Frita, ...
+    if (itemCode >= 0 && itemCode < 5) {
+        quantatyItems[itemCode]++;
+    }
+}
+
+bool Order::removeItem(int itemCode) {
+    if (itemCode >= 0 && itemCode < 5 && quantatyItems[itemCode] > 0) {
+        quantatyItems[itemCode]--;
+        return true;
+    }
+    return false; // quando não item para remover
+}
+
 float Order::calcularTotal() const {
     float totalCalculated = 0.0f;
 
