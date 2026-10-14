@@ -8,45 +8,32 @@
 struct NodeQueue {
     Order data;
     NodeQueue* next;
-    ActionsLinkedStack stackOrders;     // pilha de alterações de um pedido
+    ActionsLinkedStack stackOrders;   // pilha de alteraçoes de um pedido
 };
 
 class KitchenLinkedQueue {
-    private:
-        NodeQueue* head;
-        NodeQueue* tail;
-        int quantatyOrders;             // contador de pedidos na fila
+private:
+    NodeQueue* head;
+    NodeQueue* tail;
+    int quantatyOrders;
 
-    public:
-        KitchenLinkedQueue();
-        ~KitchenLinkedQueue();
-      
-        void enqueue(Order& order);       // insere um novo elemento no final da fila
-        void dequeue();                   // remove o primeiro elemento da fila
+public:
+    KitchenLinkedQueue();
+    ~KitchenLinkedQueue();
 
-        NodeQueue* search(int number);
+    void enqueue(Order& order);       // insere um novo elemento no final da fila
+    void dequeue();                   // remove o primeiro elemento da fila
 
-        bool isEmpty() const;             // verifica se a fila está vazia
-        int peek() const;                 // retorna o valor do primeiro elemento da fila sem removê-lo
+    NodeQueue* search(int number);
+    void removeOrder(int index);      // remover pedido
+    void undoOrder(int numberOrder);
 
-        void undoOrder(int numberOrder);
-        
-        void showOrders() const;          // exibe todos os pedidos da lista
-        void removeOrder(int index);      // remover pedido
+    bool isEmpty() const;             // verifica se a fila está vazia
+    int peek() const;                 // retorna o valor do primeiro elemento da fila sem removê-lo
+    void showOrders() const;          // exibe todos os pedidos da lista
 
-        int getQuantatyOrders() const;
-        void setQuantatyOrders(int quantatyOrders);
-
-        void carrinho(const vector<int>& quantatyItems);
-
-        // Funções de Menu
-        void menuOperacoesBalcao();
-        void menuRegisterOrder();
-        void menuRemoveOrder();
-        void menuSearchOrder();
-        void menuManageOrder();
-        void menuAddItem(int numberOrder);
-        void menuRemoveItem(int numberOrder);
+    int getQuantatyOrders() const;
+    void setQuantatyOrders(int quantatyOrders);
 };
 
 #endif

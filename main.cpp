@@ -6,6 +6,7 @@
 #include "models/HistoricDoublyLinkedList.hpp"
 #include "models/KitchenLinkedQueue.hpp"
 
+#include "controller/CounterController.hpp"
 #include "utils/TerminalUtils.hpp"
 
 using namespace std;
@@ -20,6 +21,9 @@ int menuPrincipal();
 int main() {
     HistoricDoublyLinkedList HistoricDoublyLinkedListOrders;
     KitchenLinkedQueue kitchenLinkedQueueOrders;
+
+    // Controller para gerenciar o fluxo das telas do balcão
+    CounterController counterController(kitchenLinkedQueueOrders);
 
     // Pedidos de exemplo
     /*Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
@@ -41,7 +45,7 @@ int main() {
 
         switch (optionMain) {
             case 1:
-                kitchenLinkedQueueOrders.menuOperacoesBalcao();
+                counterController.runMenuCounter(); // Chamada redirecionada para o Controller
                 break;
             case 2:
                 //kitchenLinkedQueueOrders.menuCozinha(HistoricDoublyLinkedListOrders);
