@@ -81,8 +81,12 @@ void Order::addItem(int itemCode) {
 }
 
 bool Order::removeItem(int itemCode) {
+    cout << "\n\n\n\nItens: " << quantatyItems[itemCode];
     if (itemCode >= 0 && itemCode < 5 && quantatyItems[itemCode] > 0) {
-        quantatyItems[itemCode]--;
+        this->quantatyItems[itemCode]--;
+        if(quantatyItems[itemCode] == 0) {
+            this->items.erase(items.begin() + itemCode);
+        }
         return true;
     }
     return false; // quando não item para remover

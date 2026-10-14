@@ -10,7 +10,7 @@ SRCS = main.cpp \
        service/HistoricDoublyLinkedList.cpp \
        service/Order.cpp \
        service/KitchenLinkedQueue.cpp \
-       service/ActionsLinkedStack.cpp \
+       service/LinkedStack.cpp \
        utils/TerminalUtils.cpp \
 
 # Gerar automaticamente a lista de arquivos .o

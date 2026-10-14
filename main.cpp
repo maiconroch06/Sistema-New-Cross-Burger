@@ -3,8 +3,8 @@
 
 #include "models/Order.hpp"
 #include "models/LinkedStack.hpp"
-#include "models/DoublyLinkedList.hpp"
-#include "models/LinkedQueue.hpp"
+#include "models/HistoricDoublyLinkedList.hpp"
+#include "models/KitchenLinkedQueue.hpp"
 
 #include "utils/TerminalUtils.hpp"
 
@@ -18,8 +18,8 @@ int menuPrincipal();
     void exibirHistoricOrders();
 
 int main() {
-    DoublyLinkedList DoublyLinkedListOrders;
-    LinkedQueue kitchenLinkedQueueOrders;
+    HistoricDoublyLinkedList DoublyLinkedListOrders;
+    KitchenLinkedQueue kitchenLinkedQueueOrders;
 
     // Pedidos de exemplo
     /*Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
@@ -44,7 +44,7 @@ int main() {
                 kitchenLinkedQueueOrders.menuOperacoesBalcao();
                 break;
             case 2:
-                kitchenLinkedQueueOrders.menuKitchen(DoublyLinkedListOrders);
+                //kitchenLinkedQueueOrders.menuKitchen(DoublyLinkedListOrders);
                 break;
             case 3:
                 DoublyLinkedListOrders.menuExibirHistoricOrders();
@@ -67,9 +67,10 @@ int menuPrincipal() {
     int option;
 
     cout << "============= NEW CROSS BURGER =============" << endl;
-    cout << "| [1] Operacoes do Balcao                  |" << endl;
+    cout << "| [1] Operacoes do Pedido                  |" << endl;
     cout << "| [2] Operacoes da Cozinha                 |" << endl;
     cout << "| [3] Exibir Historico de Pedidos          |" << endl;
+    cout << "| [4] Pedidos do Balcao                    |" << endl;
     cout << "| [0] Sair                                 |" << endl;
     cout << "============================================" << endl;
     cout << " > Escolha uma opcao: ";

@@ -1,10 +1,10 @@
-#ifndef _LINKED_QUEUE_
-#define _LINKED_QUEUE_
+#ifndef _KITCHEN_LINKED_QUEUE_
+#define _KITCHEN_LINKED_QUEUE_
 
 #include <iostream>
 #include "Order.hpp"
 #include "LinkedStack.hpp"
-#include "DoublyLinkedList.hpp"
+#include "HistoricDoublyLinkedList.hpp"
 
 struct NodeQueue {
     Order data;
@@ -12,7 +12,7 @@ struct NodeQueue {
     LinkedStack orderChanges;     // pilha de alterações de um pedido
 };
 
-class LinkedQueue {
+class KitchenLinkedQueue {
     private:
         NodeQueue* head;
         NodeQueue* tail;
@@ -21,8 +21,8 @@ class LinkedQueue {
         LinkedStack counterOrders;      // pilha de alterações de um pedido
 
     public:
-        LinkedQueue();
-        ~LinkedQueue();
+        KitchenLinkedQueue();
+        ~KitchenLinkedQueue();
       
         void enqueue(Order& order);       // insere um novo elemento no final da fila
         void dequeue();                   // remove o primeiro elemento da fila
@@ -52,7 +52,7 @@ class LinkedQueue {
         void menuRemoveItem(int numberOrder);
 
 
-        void menuKitchen(DoublyLinkedList historicList);
+        void menuKitchen(HistoricDoublyLinkedList historicList);
 };
 
 #endif
