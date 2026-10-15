@@ -19,7 +19,7 @@ void TerminalUtils::pause() {
         cout << endl;
         system("pause");
     #else
-        cout << "\nPressione ENTER para continuar...";
+        cout << "\nPressione ENTER para continuar..." << endl;
         // Consome qualquer caractere remanescente no buffer e aguarda o ENTER
         system("read -p '' var");
     #endif

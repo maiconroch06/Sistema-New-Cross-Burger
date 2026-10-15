@@ -209,7 +209,7 @@ void HistoricDoublyLinkedList::showOrders() const {
     NodeList* current = head;
     int quantatyOrders = 0, invoicing = 0;
 
-    cout << "============== LISTAGEM DE PEDIDOS =============" << endl;
+    cout << "============== LISTAGEM DE PEDIDOS ==============" << endl;
     while (current != nullptr) {
         
         // Visualização detalhada pedido
@@ -226,9 +226,11 @@ void HistoricDoublyLinkedList::showOrders() const {
         // Navega para o proximo pedido
         current = current->next;
     }
-
-    cout << " > Total de Pedidos: " << quantatyOrders << endl;
+    
+    cout << "=-=-=-=-=-=-=-=-= RELATORIO GERAL =-=-=-=-=-=-=-=" << endl;
+    cout << " > Quantidade Total de Pedidos: " << quantatyOrders << endl;
     cout << " > Faturamento: R$" << invoicing << endl;
+    cout << "=================================================" << endl;
 
 }
 
@@ -236,8 +238,11 @@ void HistoricDoublyLinkedList::showOrders() const {
 // Funções de Exibição de Menu
 
 void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
+    cout << "============= HISTORICO DE PEDIDOS =============" << endl;
     if (this->isEmpty()) {
-        cout << "\n # Aviso: O historico de pedidos esta vazio!" << endl;
+        cout << "        # Historico de Pedidos Vazio #       " << endl;
+        cout << "================================================" << endl;
+        TerminalUtils::pause();
         return;
     }
 
@@ -246,11 +251,11 @@ void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
 
     do {
         TerminalUtils::clear();
-        cout << "\n============= HISTORICO DE PEDIDOS =============" << endl;
+        cout << "============= HISTORICO DE PEDIDOS =============" << endl;
         this->search(indexHistoric);
         cout << "------------------------------------------------" << endl;
-        cout << "| [1] Anterior   [0] Voltar   [2] Proximo     |" << endl;
-        cout << "| [3] Exibir Relatorio                        |" << endl;
+        cout << "| [1] Anterior     [0] Voltar     [2] Proximo  |" << endl;
+        cout << "| [3] Exibir Relatorio                         |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
