@@ -546,7 +546,7 @@ int KitchenLinkedQueue::menuAddItem(int numberOrder) {
                 node->orderChanges.push(node->data);
         
                 // altera diretamente no pedido do nó
-                node->data.addItem(optionAddItem + 1);
+                node->data.addItem(optionAddItem - 1);
                 break;
 
             case 0:
