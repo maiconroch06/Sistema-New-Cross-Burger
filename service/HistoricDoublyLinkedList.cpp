@@ -95,8 +95,8 @@ void HistoricDoublyLinkedList::insertIndex(Order& order, int index) {
 }
 
 // remove um pedido pelo número do pedido
-int HistoricDoublyLinkedList::removeValue(int number) {
-    if (isEmpty()) {
+int HistoricDoublyLinkedList::removeOrder(int number) {
+    if (this->isEmpty()) {
         cerr << "\n # Erro: Lista vazia!" << endl;
         return -1;
     }
@@ -127,10 +127,10 @@ int HistoricDoublyLinkedList::removeValue(int number) {
 }
 
 // busca um pedido pelo número do pedido
-int HistoricDoublyLinkedList::search(int number) const {
+NodeList* HistoricDoublyLinkedList::search(int number) const {
     if (isEmpty()) {
         cerr << "|          # Erro: Lista vazia!                 |" << endl;
-        return -1;
+        return nullptr;
     }
 
     NodeList* current = head;
@@ -143,7 +143,7 @@ int HistoricDoublyLinkedList::search(int number) const {
     }
 
     cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
-    return -2;
+    return nullptr;
 }
 
 // verifica se a lista está vazia
@@ -212,10 +212,10 @@ void HistoricDoublyLinkedList::showOrders() const {
     cout << "============== LISTAGEM DE PEDIDOS ==============" << endl;
     while (current != nullptr) {
         
-        // Visualização detalhada pedido
-        cout << "-------------------------------------------" << endl;
+        // Visualização detalhada de cada pedido presente na lista
+        cout << "-------------------------------------------------" << endl;
         current->data.showOrder();
-        cout << "-------------------------------------------" << endl;
+        cout << "-------------------------------------------------" << endl;
         
         // Faturamento - somatório dos valores totais dos pedido
         invoicing += current->data.getTotal();
@@ -234,6 +234,58 @@ void HistoricDoublyLinkedList::showOrders() const {
 
 }
 
+void HistoricDoublyLinkedList::menuSearchOrder(int numberOrder) {
+    // Erro de lista vazia não precisa. Tal condição é tratada ao entrar no Menu Historico
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
+
+    NodeList* node = this->search(numberOrder);
+
+    TerminalUtils::clear();
+    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    node->data.showOrder();
+    cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
+    TerminalUtils::pause();
+}
+
+void HistoricDoublyLinkedList::menuRemoveOrder(int numberOrder) {
+    int optionRemove;
+    NodeList* node = this->search(numberOrder);
+
+    cout << "\n > Informe o pedido: ";
+    cin >> numberOrder;
+
+    do {
+        TerminalUtils::clear();
+        cout << "================ REMOVER PEDIDO ================" << endl;
+        node->data.showOrder();
+        cout << "------------------------------------------------" << endl;
+        cout << " #    Deseja confirmar a remocao do pedido?   # " << endl;
+        cout << "------------------------------------------------" << endl;
+        cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
+        cout << "================================================" << endl;
+        cout << " > Escolha uma opcao: ";
+
+        cin >> optionRemove;
+
+        switch (optionRemove) {
+            case 1: {
+                this->removeOrder(numberOrder);
+                return;
+            }
+            case 0:
+                cout << "\nOperacao cancelada." << endl;
+                TerminalUtils::pause();
+                break;
+                
+            default:
+                cout << "\n # Erro: Opcao invalida!" << endl;
+                TerminalUtils::pause();
+                break;
+        }
+    } while (optionRemove != 0);
+    return;
+}
 
 // Funções de Exibição de Menu
 
@@ -255,7 +307,7 @@ void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
         this->search(indexHistoric);
         cout << "------------------------------------------------" << endl;
         cout << "| [1] Anterior     [0] Voltar     [2] Proximo  |" << endl;
-        cout << "| [3] Exibir Relatorio                         |" << endl;
+        cout << "| [3] Deletar      [4] Relatorio  [5] Buscar   |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
@@ -278,11 +330,14 @@ void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
                 break;
             }
 
-            case 3:
+            case 4:
                 TerminalUtils::clear();
                 this->showOrders();
                 TerminalUtils::pause();
                 break;
+            
+            case 5:
+                
 
             case 0:
                 break;

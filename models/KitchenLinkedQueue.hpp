@@ -50,7 +50,7 @@ class KitchenLinkedQueue {
         void menuRemoveOrder();
         void menuSearchOrder();
         void menuManageOrder();
-        void menuAddItem(int numberOrder);
+        int menuAddItem(int numberOrder);
         int menuRemoveItem(int numberOrder);
 
 

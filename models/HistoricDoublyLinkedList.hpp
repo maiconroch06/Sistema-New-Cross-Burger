@@ -22,8 +22,8 @@ class HistoricDoublyLinkedList {
         void insert(Order& order);                  // insere um novo pedido inserido no início
         void insertEnd(Order& order);               // insere um pedido no final da lista
         void insertIndex(Order& order, int index);  // insere um pedido em uma posição específica da lista
-        int removeValue(int number);                // remove um pedido pelo número do pedido
-        int search(int number) const;               // busca um pedido pelo número do pedido
+        int removeOrder(int number);                // remove um pedido pelo número do pedido
+        NodeList* search(int number) const;         // busca um pedido pelo número do pedido
 
         bool isEmpty() const;                       // verifica se a lista está vazia
 
@@ -34,6 +34,8 @@ class HistoricDoublyLinkedList {
 
         // Funções de Menu
         void menuExibirHistoricOrders();
+        void menuSearchOrder(int numberOrder);
+        void menuRemoveOrder(int numberOrder);
 };
 
 #endif
