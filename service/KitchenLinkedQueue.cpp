@@ -450,7 +450,7 @@ void KitchenLinkedQueue::menuManageOrder() {
         return;
     }
 
-    int optionManagerOrder, numberOrder;
+    int optionManagerOrder = -1, numberOrder;
 
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
@@ -472,7 +472,11 @@ void KitchenLinkedQueue::menuManageOrder() {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
-        cin >> optionManagerOrder;
+        if (!(cin >> optionManagerOrder)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            optionManagerOrder = -1;
+        }
 
         switch (optionManagerOrder) {
             case 1:
@@ -518,7 +522,7 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
         return;
     }
 
-    int optionAddItem;
+    int optionAddItem = -1;
 
     Order orderBackup = node->data;
     LinkedStack orderChangesBackup(node->orderChanges);
@@ -541,7 +545,11 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
-        cin >> optionAddItem;
+        if (!(cin >> optionAddItem)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            optionAddItem = -1;
+        }
         
         if (optionAddItem >= 1 && optionAddItem <= 5) {
             node->orderChanges.push(node->data);
@@ -584,7 +592,7 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
         return;
     }
 
-    int optionRemoveItem;
+    int optionRemoveItem = -1;
 
     Order orderBackup = node->data;
     LinkedStack orderChangesBackup(node->orderChanges);
@@ -594,8 +602,8 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
 
     do {
         TerminalUtils::clear();
-        cout << "================= REMOVER ITEM =================" << endl;
         if (node == nullptr) {
+            cout << "================= REMOVER ITEM =================" << endl;
             cout << "               # Pedido Excluido #              " << endl;
             cout << "================================================" << endl;
             TerminalUtils::pause();
@@ -603,6 +611,7 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
         }
 
         carrinho(node->data.getQuantatyItems());
+        cout << "================= REMOVER ITEM =================" << endl;
         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
         cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
@@ -613,7 +622,11 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
-        cin >> optionRemoveItem;
+        if (!(cin >> optionRemoveItem)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            optionRemoveItem = -1;
+        }
 
         if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {
             node->orderChanges.push(node->data);

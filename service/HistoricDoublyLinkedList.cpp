@@ -284,13 +284,9 @@ void HistoricDoublyLinkedList::menuRemoveOrder() {
 
     NodeList* node = this->search(numberOrder);
 
-    cout << "Passei aqui1!" << endl;
-
-    if (node != nullptr)
-    {
-        cout << "Passei aqui2!" << endl;
+    if (node != nullptr) {
         do {
-            // TerminalUtils::clear();
+            TerminalUtils::clear();
             cout << "================ REMOVER PEDIDO ================" << endl;
             node->data.showOrder();
             cout << "------------------------------------------------" << endl;

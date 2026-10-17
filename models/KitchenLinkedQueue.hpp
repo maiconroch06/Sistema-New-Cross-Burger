@@ -2,6 +2,7 @@
 #define _KITCHEN_LINKED_QUEUE_
 
 #include <iostream>
+#include <limits>
 #include "Order.hpp"
 #include "LinkedStack.hpp"
 #include "HistoricDoublyLinkedList.hpp"

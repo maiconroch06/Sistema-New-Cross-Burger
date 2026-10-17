@@ -15,6 +15,7 @@ class LinkedStack {
     public:
         LinkedStack();                                     // Construtor vazio 
         LinkedStack(const LinkedStack& originStack);       // Construtor copia
+        LinkedStack& operator=(const LinkedStack& originStack);
         ~LinkedStack();                                    // Destrutor
         
         void push(const Order& order);  // Adicionar ação na pilha

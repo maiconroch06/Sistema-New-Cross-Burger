@@ -29,6 +29,42 @@ LinkedStack::LinkedStack(const LinkedStack& originStack) {
     }
 }
 
+// Operador de Atribuição (usado para backups - Add + Remove -> Items)
+LinkedStack& LinkedStack::operator=(const LinkedStack& originStack) {
+    if (this == &originStack) {
+        return *this;
+    }
+
+    // 1. Limpa os nós existentes da pilha atual
+    while (top != nullptr) {
+        NodeStack* nextNode = top->next;
+        delete top;
+        top = nextNode;
+    }
+
+    // 2. Copia profundamente os nós da pilha de origem
+    if (originStack.top != nullptr) {
+        NodeStack* currentOther = originStack.top;
+        NodeStack* lastInserted = nullptr;
+
+        while (currentOther != nullptr) {
+            NodeStack* newNode = new NodeStack();
+            newNode->data = currentOther->data;
+            newNode->next = nullptr;
+
+            if (top == nullptr) {
+                top = newNode;
+            } else {
+                lastInserted->next = newNode;
+            }
+            lastInserted = newNode;
+            currentOther = currentOther->next;
+        }
+    }
+
+    return *this;
+}
+
 LinkedStack::~LinkedStack() {
     while (top != nullptr) {
         NodeStack* nextNode = top->next;
