@@ -22,6 +22,9 @@ public:
     Order(const int number, const string& client, const vector<string>& items, const float total);
     ~Order();
 
+    // Esta variável estática funciona como o contador mestre do sistema
+    inline static int globalCounter = 0; 
+
     void addItem(const std::string& item);
     void removeItem();
     void showOrder() const;

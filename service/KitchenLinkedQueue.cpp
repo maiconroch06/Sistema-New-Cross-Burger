@@ -26,10 +26,10 @@ KitchenLinkedQueue::~KitchenLinkedQueue() {
 void KitchenLinkedQueue::enqueue(Order& order) {
     NodeQueue* newNode = new NodeQueue();
 
-    int number = getQuantatyOrders() + 1;
-    order.setNumber(number);
+    // int number = getQuantatyOrders() + 1;
+    // order.setNumber(number);
 
-    setQuantatyOrders(number);
+    setQuantatyOrders(getQuantatyOrders() + 1);
 
     newNode->data = order;
     newNode->next = nullptr;

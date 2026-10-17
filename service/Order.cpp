@@ -12,6 +12,9 @@ Order::Order() {
 
 // Será definido na classe KitchenLikedQueue
 Order::Order(const string& client, const vector<string>& items, const vector<int>& quantatyItems) {
+    Order::globalCounter++;                // Incrementa o contador geral de pedidos criados no sistema
+    this->number = Order::globalCounter;   // Grava o número único neste pedido específico
+    
     this->client = client;
     this->items = items;
     this->quantatyItems = quantatyItems;
