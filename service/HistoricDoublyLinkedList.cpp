@@ -102,34 +102,49 @@ int HistoricDoublyLinkedList::removeOrder(int number) {
     }
 
     NodeList* current = head;
-    while (current != nullptr) {
-        if (current->data.getNumber() == number) {
-            if (current == head) {
-                head = current->next;
-            }
-            if (current == tail) {
-                tail = current->previous;
-            }
-            if (current->previous != nullptr) {
-                current->previous->next = current->next;
-            }
-            if (current->next != nullptr) {
-                current->next->previous = current->previous;
-            }
-            delete current;
-            return 0;
-        }
+
+    // Procura o pedido pelo número
+    while (current != nullptr &&
+           current->data.getNumber() != number) {
         current = current->next;
     }
 
-    cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
-    return -2;
+    // Pedido não encontrado
+    if (current == nullptr) {
+        cerr << "\n # Erro: Pedido nao encontrado!" << endl;
+        return -2;
+    }
+
+    // Atualiza o nó anterior ou o início da lista
+    if (current->previous != nullptr) {
+        current->previous->next = current->next;
+    } else {
+        head = current->next;
+    }
+
+    // Atualiza o próximo nó ou o final da lista
+    if (current->next != nullptr) {
+        current->next->previous = current->previous;
+    } else {
+        tail = current->previous;
+    }
+
+    // Se a lista ficou vazia, ambos devem ser nullptr
+    if (head == nullptr) {
+        tail = nullptr;
+    }
+
+    delete current;
+
+    cout << "\nPedido removido com sucesso!" << endl;
+    return 0;
 }
+
 
 // busca um pedido pelo número do pedido
 NodeList* HistoricDoublyLinkedList::search(int number) const {
     if (isEmpty()) {
-        cerr << "|          # Erro: Lista vazia!                 |" << endl;
+        cerr << "\n|          # Lista vazia!                       |" << endl;
         return nullptr;
     }
 
@@ -137,12 +152,11 @@ NodeList* HistoricDoublyLinkedList::search(int number) const {
     while (current != nullptr) {
         if (current->data.getNumber() == number) {
             current->data.showOrder();
-            return 0;
+            return current;
         }
         current = current->next;
     }
-
-    cerr << "|         # Erro: Pedido nao encontrado!       |" << endl;
+    // cerr << "\n|         # Erro: Pedido nao encontrado!       |" << endl;
     return nullptr;
 }
 
@@ -234,12 +248,26 @@ void HistoricDoublyLinkedList::showOrders() const {
 
 }
 
-void HistoricDoublyLinkedList::menuSearchOrder(int numberOrder) {
-    // Erro de lista vazia não precisa. Tal condição é tratada ao entrar no Menu Historico
+void HistoricDoublyLinkedList::menuSearchOrder() {
+    if (this->isEmpty()) {
+        cout << "\n # Historico de pedidos vazio! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
+
+    int numberOrder;
+
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
 
     NodeList* node = this->search(numberOrder);
+
+    // Verifica se o pedido foi encontrado
+    if (node == nullptr) {
+        cout << "\n # Erro: Pedido nao encontrado! #" << endl;
+        TerminalUtils::pause();
+        return;
+    }
 
     TerminalUtils::clear();
     cout << "=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=" << endl;
@@ -248,43 +276,52 @@ void HistoricDoublyLinkedList::menuSearchOrder(int numberOrder) {
     TerminalUtils::pause();
 }
 
-void HistoricDoublyLinkedList::menuRemoveOrder(int numberOrder) {
-    int optionRemove;
-    NodeList* node = this->search(numberOrder);
-
+void HistoricDoublyLinkedList::menuRemoveOrder() {
+    int optionRemove, numberOrder;
+    
     cout << "\n > Informe o pedido: ";
     cin >> numberOrder;
 
-    do {
-        TerminalUtils::clear();
-        cout << "================ REMOVER PEDIDO ================" << endl;
-        node->data.showOrder();
-        cout << "------------------------------------------------" << endl;
-        cout << " #    Deseja confirmar a remocao do pedido?   # " << endl;
-        cout << "------------------------------------------------" << endl;
-        cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
-        cout << "================================================" << endl;
-        cout << " > Escolha uma opcao: ";
+    NodeList* node = this->search(numberOrder);
 
-        cin >> optionRemove;
+    cout << "Passei aqui1!" << endl;
 
-        switch (optionRemove) {
-            case 1: {
-                this->removeOrder(numberOrder);
-                return;
+    if (node != nullptr)
+    {
+        cout << "Passei aqui2!" << endl;
+        do {
+            // TerminalUtils::clear();
+            cout << "================ REMOVER PEDIDO ================" << endl;
+            node->data.showOrder();
+            cout << "------------------------------------------------" << endl;
+            cout << " #    Deseja confirmar a remocao do pedido?   # " << endl;
+            cout << "------------------------------------------------" << endl;
+            cout << "| [1] Confirmar Acao             [0] Cancelar  |" << endl;
+            cout << "================================================" << endl;
+            cout << " > Escolha uma opcao: ";
+    
+            cin >> optionRemove;
+    
+            switch (optionRemove) {
+                case 1: {
+                    this->removeOrder(numberOrder);
+                    return;
+                }
+                case 0:
+                    cout << "\nOperacao cancelada." << endl;
+                    TerminalUtils::pause();
+                    break;
+                    
+                default:
+                    cout << "\n # Erro: Opcao invalida!" << endl;
+                    TerminalUtils::pause();
+                    break;
             }
-            case 0:
-                cout << "\nOperacao cancelada." << endl;
-                TerminalUtils::pause();
-                break;
-                
-            default:
-                cout << "\n # Erro: Opcao invalida!" << endl;
-                TerminalUtils::pause();
-                break;
-        }
-    } while (optionRemove != 0);
-    return;
+        } while (optionRemove != 0);
+    } else {
+        TerminalUtils::pause();
+        return;
+    }
 }
 
 // Funções de Exibição de Menu
@@ -330,14 +367,38 @@ void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
                 break;
             }
 
-            case 4:
+            case 3: {
+                // Guarda o próximo pedido antes de remover o atual
+                int next = this->nextOrder(indexHistoric);
+
+                menuRemoveOrder();
+
+                // Se o pedido atual foi removido, atualiza a navegação
+                if (this->search(indexHistoric) == nullptr) {
+                    if (this->isEmpty()) {
+                        break;
+                    }
+
+                    // Se ainda houver pedidos, seleciona um válido
+                    if (this->search(next) != nullptr) {
+                        indexHistoric = next;
+                    } else {
+                        indexHistoric = head->data.getNumber();
+                    }
+                }
+                break;
+            }
+
+            case 4: {
                 TerminalUtils::clear();
                 this->showOrders();
                 TerminalUtils::pause();
                 break;
+            }
             
-            case 5:
-                
+            case 5: {
+                menuSearchOrder();
+            }
 
             case 0:
                 break;

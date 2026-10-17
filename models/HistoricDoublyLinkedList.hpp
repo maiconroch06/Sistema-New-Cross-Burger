@@ -34,8 +34,8 @@ class HistoricDoublyLinkedList {
 
         // Funções de Menu
         void menuExibirHistoricOrders();
-        void menuSearchOrder(int numberOrder);
-        void menuRemoveOrder(int numberOrder);
+        void menuSearchOrder();
+        void menuRemoveOrder();
 };
 
 #endif

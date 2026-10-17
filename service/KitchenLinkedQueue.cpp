@@ -611,7 +611,7 @@ int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
                 node->orderChanges.push(node->data);
         
                 // altera diretamente no pedido do nó
-                node->data.addItem(optionRemoveItem - 1);
+                node->data.removeItem(optionRemoveItem - 1);
                 break;
 
             case 0:
@@ -628,23 +628,23 @@ int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
                 break;
         }
 
-        if (optionRemoveItem == 0) {
-            node->data = orderBackup;
-            return 1;
+        // if (optionRemoveItem == 0) {
+        //     node->data = orderBackup;
+        //     return 1;
 
-        } else if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {
-            // salva estado para na pilha
-            node->orderChanges.push(node->data);
+        // } else if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {
+        //     // salva estado para na pilha
+        //     node->orderChanges.push(node->data);
 
-            // altera diretamente no pedido do nó
-            node->data.removeItem(optionRemoveItem - 1);
+        //     // altera diretamente no pedido do nó
+        //     node->data.removeItem(optionRemoveItem - 1);
             
-            // remove diretamente o nó do pedido quando não houver um item
-            if(node->data.getItems().empty()) {
-                this->removeOrder(orderNumber);
-                return 0;
-            }
-        }
+        //     // remove diretamente o nó do pedido quando não houver um item
+        //     if(node->data.getItems().empty()) {
+        //         this->removeOrder(orderNumber);
+        //         return 0;
+        //     }
+        // }
 
     } while (optionRemoveItem != 0 && optionRemoveItem != 10);
     return 1;
