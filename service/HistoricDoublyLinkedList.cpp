@@ -398,6 +398,7 @@ void HistoricDoublyLinkedList::menuExibirHistoricOrders() {
             
             case 5: {
                 menuSearchOrder();
+                break;
             }
 
             case 0:

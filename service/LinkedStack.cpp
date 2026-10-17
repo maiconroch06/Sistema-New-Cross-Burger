@@ -6,6 +6,29 @@ LinkedStack::LinkedStack() {
     top = nullptr;
 }
 
+LinkedStack::LinkedStack(const LinkedStack& originStack) {
+    top = nullptr;
+
+    if (originStack.top != nullptr) {
+        NodeStack* currentOther = originStack.top;
+        NodeStack* lastInserted = nullptr;
+
+        while (currentOther != nullptr) {
+            NodeStack* newNode = new NodeStack();
+            newNode->data = currentOther->data;
+            newNode->next = nullptr;
+
+            if (top == nullptr) {
+                top = newNode;
+            } else {
+                lastInserted->next = newNode;
+            }
+            lastInserted = newNode;
+            currentOther = currentOther->next;
+        }
+    }
+}
+
 LinkedStack::~LinkedStack() {
     while (top != nullptr) {
         NodeStack* nextNode = top->next;

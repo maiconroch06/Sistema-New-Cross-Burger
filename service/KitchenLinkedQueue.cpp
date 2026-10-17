@@ -476,10 +476,10 @@ void KitchenLinkedQueue::menuManageOrder() {
 
         switch (optionManagerOrder) {
             case 1:
-                optionManagerOrder = menuAddItem(numberOrder);
+                menuAddItem(numberOrder);
                 break;
             case 2:
-                optionManagerOrder = menuRemoveItem(numberOrder);
+                menuRemoveItem(numberOrder);
                 break;
             case 3:
                 // volta a uma versão anterior do pedido - acessando o nó
@@ -495,18 +495,17 @@ void KitchenLinkedQueue::menuManageOrder() {
                 break;
         }
     } while (optionManagerOrder != 0);
+
 }
 
-// Retorno 1: Quando o pedido a ser salvo é o alterado 
-// Retorno 0: Quando o pedido a ser salvo é o não alterado
-int KitchenLinkedQueue::menuAddItem(int numberOrder) {
+void KitchenLinkedQueue::menuAddItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << "======================= ADICIONAR ITEM ======================" << endl;
         cout << "                       # Lista Vazia! #                      " << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! # " << endl;
         cout << "=============================================================";
         TerminalUtils::pause();
-        return 0;
+        return;
     }
 
     // Busca o nó na fila
@@ -516,11 +515,14 @@ int KitchenLinkedQueue::menuAddItem(int numberOrder) {
     if (node == nullptr) {
         cout << "\n # Erro: Pedido nao encontrado! #" << endl;
         TerminalUtils::pause();
-        return 0;
+        return;
     }
 
     int optionAddItem;
+
     Order orderBackup = node->data;
+    LinkedStack orderChangesBackup(node->orderChanges);
+
     int orderNumber = node->data.getNumber();
     vector<string> items = node->data.getItems();
 
@@ -541,37 +543,35 @@ int KitchenLinkedQueue::menuAddItem(int numberOrder) {
 
         cin >> optionAddItem;
         
-        switch (optionAddItem) {
-            case 1: case 2: case 3: case 4: case 5:
-                node->orderChanges.push(node->data);
-        
-                // altera diretamente no pedido do nó
-                node->data.addItem(optionAddItem - 1);
-                break;
+        if (optionAddItem >= 1 && optionAddItem <= 5) {
+            node->orderChanges.push(node->data);
+            node->data.addItem(optionAddItem - 1);
 
-            case 0:
-                node->data = orderBackup;
-                return 1;
+        } else if (optionAddItem == 0) {
+            node->data = orderBackup;
+            node->orderChanges = orderChangesBackup;
 
-            default:
-                cerr << "\n # Erro: Opcao invalida!" << endl;
-                TerminalUtils::pause();
-                break;
+            return;
+        } else if (optionAddItem == 10) {
+            // alterações ja foram salvas quando adicionadas
+            return;
+        } else {
+            cerr << "\n # Erro: Opcao invalida!" << endl;
+            TerminalUtils::pause();
         }
 
     } while (optionAddItem != 0 && optionAddItem != 10);
+
 }
 
-// Retorno 1: Quando o pedido a ser salvo é o alterado 
-// Retorno 0: Quando o pedido a ser salvo é o não alterado
-int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
+void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << "======================== REMOVER ITEM =======================" << endl;
         cout << "                       # Lista Vazia! #                      " << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! # " << endl;
         cout << "=============================================================";
         TerminalUtils::pause();
-        return 0;
+        return;
     }
 
     // Busca o nó na fila
@@ -581,19 +581,28 @@ int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
     if (node == nullptr) {
         cout << "\n # Erro: Pedido nao encontrado! #" << endl;
         TerminalUtils::pause();
-        return 0;
+        return;
     }
 
     int optionRemoveItem;
+
     Order orderBackup = node->data;
+    LinkedStack orderChangesBackup(node->orderChanges);
+
     int orderNumber = node->data.getNumber();
     vector<string> items = node->data.getItems();
 
     do {
         TerminalUtils::clear();
-        carrinho(node->data.getQuantatyItems());
-
         cout << "================= REMOVER ITEM =================" << endl;
+        if (node == nullptr) {
+            cout << "               # Pedido Excluido #              " << endl;
+            cout << "================================================" << endl;
+            TerminalUtils::pause();
+            return;
+        }
+
+        carrinho(node->data.getQuantatyItems());
         cout << "| [1] Cachorro Quente         R$ 8.00          |" << endl;
         cout << "| [2] Batata Frita            R$ 6.00          |" << endl;
         cout << "| [3] Hamburguer              R$ 20.00         |" << endl;
@@ -606,48 +615,27 @@ int KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
 
         cin >> optionRemoveItem;
 
-        switch (optionRemoveItem) {
-            case 1: case 2: case 3: case 4: case 5:
-                node->orderChanges.push(node->data);
-        
-                // altera diretamente no pedido do nó
-                node->data.removeItem(optionRemoveItem - 1);
-                break;
+        if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {
+            node->orderChanges.push(node->data);
+            node->data.removeItem(optionRemoveItem - 1);
 
-            case 0:
-                if(node->data.getItems().empty()) {
-                    this->removeOrder(orderNumber);
-                    return 0;
-                }
-                node->data = orderBackup;
-                return 1;
+        } else if (optionRemoveItem == 0) {
+            node->data = orderBackup;
+            node->orderChanges = orderChangesBackup;
 
-            default:
-                cerr << "  # Opcao invalida!" << endl;
-                TerminalUtils::pause();
-                break;
+            return;
+        } else if (optionRemoveItem == 10) {
+            if (node->data.getTotal() == 0) {
+                this->removeOrder(orderNumber);
+            }
+            return;
+        } else {
+            cerr << "\n # Erro: Opcao invalida!" << endl;
+            TerminalUtils::pause();
         }
 
-        // if (optionRemoveItem == 0) {
-        //     node->data = orderBackup;
-        //     return 1;
-
-        // } else if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {
-        //     // salva estado para na pilha
-        //     node->orderChanges.push(node->data);
-
-        //     // altera diretamente no pedido do nó
-        //     node->data.removeItem(optionRemoveItem - 1);
-            
-        //     // remove diretamente o nó do pedido quando não houver um item
-        //     if(node->data.getItems().empty()) {
-        //         this->removeOrder(orderNumber);
-        //         return 0;
-        //     }
-        // }
-
     } while (optionRemoveItem != 0 && optionRemoveItem != 10);
-    return 1;
+
 }
 
 void KitchenLinkedQueue::prepareOrder(HistoricDoublyLinkedList& historicList) {

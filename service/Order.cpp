@@ -74,43 +74,29 @@ void Order::showOrder() const {
 }
 
 void Order::addItem(int itemCode) {
-    // 0 - Cachorro Quente, 1 - Batata Frita, ...
     if (itemCode >= 0 && itemCode < 5) {
         quantatyItems[itemCode]++;
+        this->total = calcularTotal();
     }
 }
 
 bool Order::removeItem(int itemCode) {
-    cout << "\n\n\n\nItens1: " << quantatyItems[itemCode];
-    cout << "\n\n\n\nItens Code: " << itemCode;
     if (itemCode >= 0 && itemCode < 5 && quantatyItems[itemCode] > 0) {
-        this->quantatyItems[itemCode]--;
-        cout << "\n\n\n\nItens1: " << quantatyItems[itemCode];
-        if(quantatyItems[itemCode] == 0) {
-            this->items.erase(items.begin() + itemCode);
-        }
+        quantatyItems[itemCode]--;
+        this->total = calcularTotal();
         return true;
     }
-    return false; // quando não item para remover
+    return false;
 }
 
 float Order::calcularTotal() const {
+    // Tabela de preços na mesma ordem das opções (0 a 4)
+    float prices[] = {8.0f, 6.0f, 20.0f, 46.0f, 12.0f};
     float totalCalculated = 0.0f;
 
-    for (const string& item : this->items) {
-        if (item == "Cachorro Quente") {
-            totalCalculated += 8.0f;
-        } else if (item == "Batata Frita") {
-            totalCalculated += 6.0f;
-        } else if (item == "Hamburguer") {
-            totalCalculated += 20.0f;
-        } else if (item == "Pizza") {
-            totalCalculated += 46.0f;
-        } else if (item == "Coca Zero") {
-            totalCalculated += 12.0f;
-        }
+    for (int i = 0; i < 5; i++) {
+        totalCalculated += quantatyItems[i] * prices[i];
     }
-
     return totalCalculated;
 }
 

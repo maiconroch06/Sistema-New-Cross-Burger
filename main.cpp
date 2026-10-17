@@ -21,19 +21,6 @@ int main() {
     HistoricDoublyLinkedList DoublyLinkedListOrders = HistoricDoublyLinkedList();
     KitchenLinkedQueue kitchenLinkedQueueOrders;
 
-    // Pedidos de exemplo
-    /*Order order1(1, "Maicon", {"Hamburguer", "Batata Frita"}, 45.0f);
-    Order order2(3, "Estudante", {"Pizza GG", "Coca Zero", "Sobremesa"}, 50.0f);
-    Order order3(4, "Rocha", {"Milk Shake", "Batata Frita"}, 20.0f);
-
-    kitchenLinkedQueueOrders.enqueue(order1);
-    kitchenLinkedQueueOrders.enqueue(order2);
-    kitchenLinkedQueueOrders.enqueue(order3);
-
-    DoublyLinkedListOrders.insertEnd(order1);
-    DoublyLinkedListOrders.insertEnd(order2);
-    DoublyLinkedListOrders.insertEnd(order3);*/
-
     int optionMain;
     do {
         TerminalUtils::clear(); // Limpar terminal
