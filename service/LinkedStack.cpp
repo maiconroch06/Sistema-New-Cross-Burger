@@ -13,7 +13,7 @@ LinkedStack::LinkedStack(const LinkedStack& originStack) {
     if (originStack.top != nullptr) {
         NodeStack* currentOther = originStack.top;
         NodeStack* lastInserted = nullptr;
-
+        
         while (currentOther != nullptr) {
             NodeStack* newNode = new NodeStack();
             newNode->data = currentOther->data;

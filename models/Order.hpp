@@ -16,10 +16,8 @@ private:
     float total;
 
 public:
-    Order();                                                                                            //
-    Order(const string& client, const vector<string>& items);
-    Order(const string& client, const vector<string>& items, const vector<int>& quantatyItems);
-    Order(const int number, const string& client, const vector<string>& items, const float total);
+    Order();
+    Order(const string& client, const vector<int>& quantatyItems);
     ~Order();
 
     // Esta variável estática funciona como o contador mestre do sistema

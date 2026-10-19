@@ -15,8 +15,9 @@ KitchenLinkedQueue::KitchenLinkedQueue() {
 
 // Destrutor
 KitchenLinkedQueue::~KitchenLinkedQueue() {
+    NodeQueue* nextNode;
     while (head != nullptr) {
-        NodeQueue* nextNode = head->next;
+        nextNode = head->next;
         delete head;
         head = nextNode;
     }
@@ -329,7 +330,7 @@ void KitchenLinkedQueue::menuRegisterOrder() {
                     cerr << "\n # Erro: Adicione pelo menos um item ao pedido!" << endl;
                     TerminalUtils::pause();
                 } else {
-                    Order order(client, items, quantatyItems);
+                    Order order(client, quantatyItems);
                     this->enqueue(order);
 
                     TerminalUtils::clear();

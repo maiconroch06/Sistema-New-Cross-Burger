@@ -16,6 +16,18 @@ int main() {
     HistoricDoublyLinkedList DoublyLinkedListOrders = HistoricDoublyLinkedList();
     KitchenLinkedQueue kitchenLinkedQueueOrders;
 
+    Order order1("Maicon", {1, 1, 1, 1, 1});
+    Order order2("Samuel", {2, 2, 2, 2, 2});
+    Order order3("Danilo", {3, 3, 3, 3, 3});
+    Order order4("Thiago", {1, 1, 0, 0, 0});
+    Order order5("A", {1, 0, 5, 0, 0});
+
+    kitchenLinkedQueueOrders.enqueue(order1);
+    kitchenLinkedQueueOrders.enqueue(order2);
+    kitchenLinkedQueueOrders.enqueue(order3);
+    kitchenLinkedQueueOrders.enqueue(order4);
+    kitchenLinkedQueueOrders.enqueue(order5);
+
     int optionMain;
     do {
         TerminalUtils::clear();

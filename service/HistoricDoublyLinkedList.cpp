@@ -11,8 +11,9 @@ HistoricDoublyLinkedList::HistoricDoublyLinkedList() {
 
 // destrutor
 HistoricDoublyLinkedList::~HistoricDoublyLinkedList() {
+    NodeList* nextNode;
     while (head != nullptr) {
-        NodeList* nextNode = head->next;
+        nextNode = head->next;
         delete head;
         head = nextNode;
     }
