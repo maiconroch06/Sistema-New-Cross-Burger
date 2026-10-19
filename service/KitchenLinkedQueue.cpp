@@ -26,9 +26,6 @@ KitchenLinkedQueue::~KitchenLinkedQueue() {
 void KitchenLinkedQueue::enqueue(Order& order) {
     NodeQueue* newNode = new NodeQueue();
 
-    // int number = getQuantatyOrders() + 1;
-    // order.setNumber(number);
-
     setQuantatyOrders(getQuantatyOrders() + 1);
 
     newNode->data = order;
@@ -112,7 +109,7 @@ void KitchenLinkedQueue::undoOrder(int numberOrder) {
         return;
     }
 
-    // Verifica se 
+    // Verifica se pilha de alterações esta vazia
     if (node->orderChanges.isEmpty()) {
         //cerr << " Operacao cancelada! Nenhuma alteracao do pedido encontrada.";
         return;
@@ -163,13 +160,17 @@ void KitchenLinkedQueue::removeOrder(int index) {
         return;
     }
 
+    // Remover no início
     if (current == head) {
         head = head->next;
+        // 
         if (head == nullptr) {
             tail = nullptr;
         }
     } else {
+        // Remover no meio
         previous->next = current->next;
+        // Remover no fim
         if (current == tail) {
             tail = previous;
         }
@@ -193,7 +194,7 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
         cout << "------------------------------------------------" << endl;
         cout << "| [1] Adicionar Novo Pedido  [4] Buscar Pedido |" << endl;
         cout << "| [2] Remover Pedido         [0] Sair          |" << endl;
-        cout << "| [3] Gerenciar Pedido                         |" << endl;
+        cout << "| [3] Acoes do Pedido                          |" << endl;
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
         cin >> option;
@@ -230,7 +231,7 @@ void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
 
     cout << "=-=-=-=-=-=-=-=  CARRINHO ATUAL  =-=-=-=-=-=-=-=" << endl;
     bool vazio = true;
-    for (size_t i = 0; i < menuNames.size(); ++i) {
+    for (int i = 0; i < menuNames.size(); ++i) {
         if (i < quantatyItems.size() && quantatyItems[i] > 0) {
             cout << "   - " << menuNames[i] << ": " << quantatyItems[i] << endl;
             vazio = false;
@@ -442,7 +443,7 @@ void KitchenLinkedQueue::menuSearchOrder() {
 
 void KitchenLinkedQueue::menuManageOrder() {
     if (this->isEmpty()) {
-        cout << "====================== GERENCIAR PEDIDO =====================" << endl;
+        cout << "======================= ACOES DO PEDIDO =====================" << endl;
         cout << "                       # Lista Vazia! #                      " << endl;
         cout << " # Adicione um novo pedido antes de fazer alguma operacao! # " << endl;
         cout << "=============================================================";
@@ -457,7 +458,7 @@ void KitchenLinkedQueue::menuManageOrder() {
 
     do {
         TerminalUtils::clear();
-        cout << "=============== GERENCIAR PEDIDO ===============" << endl;
+        cout << "================ ACOES DO PEDIDO ===============" << endl;
         if (this->search(numberOrder) == nullptr) {
             cout << "            # Pedido nao encontrado! #          " << endl;
             cout << "================================================" << endl;
@@ -472,10 +473,11 @@ void KitchenLinkedQueue::menuManageOrder() {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
+        // Sempre que ocorrer algum erro no cin
         if (!(cin >> optionManagerOrder)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            optionManagerOrder = -1;
+            cin.clear();                   // Limpa o cin e acaba com o erro
+            cin.ignore(1000, '\n');        // Pega o que foi digitado e remove o \n
+            optionManagerOrder = -1;            // Reseta a variavel do menu
         }
 
         switch (optionManagerOrder) {
@@ -545,10 +547,11 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
+        // Sempre que ocorrer algum erro no cin
         if (!(cin >> optionAddItem)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            optionAddItem = -1;
+            cin.clear();                   // Limpa o cin e acaba com o erro
+            cin.ignore(1000, '\n');        // Pega o que foi digitado e remove o \n
+            optionAddItem = -1;            // Reseta a variavel do menu
         }
         
         if (optionAddItem >= 1 && optionAddItem <= 5) {
@@ -622,10 +625,11 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
         cout << "================================================" << endl;
         cout << " > Escolha uma opcao: ";
 
+        // Sempre que ocorrer algum erro no cin
         if (!(cin >> optionRemoveItem)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            optionRemoveItem = -1;
+            cin.clear();                   // Limpa o cin e acaba com o erro
+            cin.ignore(1000, '\n');        // Pega o que foi digitado e remove o \n
+            optionRemoveItem = -1;            // Reseta a variavel do menu
         }
 
         if (optionRemoveItem >= 1 && optionRemoveItem <= 5) {

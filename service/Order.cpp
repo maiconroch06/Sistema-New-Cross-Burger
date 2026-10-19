@@ -21,13 +21,13 @@ Order::Order(const string& client, const vector<string>& items, const vector<int
     this->total = calcularTotal();
 }
 
-Order::Order(const int number, const string& client, const vector<string>& items, const float total) {
-    this->number = number;
-    this->client = client;
-    this->items = items;
-    this->quantatyItems = {0, 0, 0, 0, 0};
-    this->total = total;
-}
+// Order::Order(const int number, const string& client, const vector<string>& items, const float total) {
+//     this->number = number;
+//     this->client = client;
+//     this->items = items;
+//     this->quantatyItems = {0, 0, 0, 0, 0};
+//     this->total = total;
+// }
 
 Order::~Order() {}
 

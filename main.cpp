@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 #include "models/Order.hpp"
 #include "models/LinkedStack.hpp"
@@ -12,10 +11,6 @@ using namespace std;
 
 // Protótipos das funções
 int menuPrincipal();
-    void operacoesBalcao();
-    void cadastrarPedido();
-    void removerPedido();
-    void exibirHistoricOrders();
 
 int main() {
     HistoricDoublyLinkedList DoublyLinkedListOrders = HistoricDoublyLinkedList();
@@ -23,7 +18,7 @@ int main() {
 
     int optionMain;
     do {
-        TerminalUtils::clear(); // Limpar terminal
+        TerminalUtils::clear();
         optionMain = menuPrincipal();
 
         switch (optionMain) {

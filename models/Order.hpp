@@ -16,7 +16,7 @@ private:
     float total;
 
 public:
-    Order();
+    Order();                                                                                            //
     Order(const string& client, const vector<string>& items);
     Order(const string& client, const vector<string>& items, const vector<int>& quantatyItems);
     Order(const int number, const string& client, const vector<string>& items, const float total);
