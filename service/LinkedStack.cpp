@@ -6,6 +6,7 @@ LinkedStack::LinkedStack() {
     top = nullptr;
 }
 
+// Cópia do Construtor
 LinkedStack::LinkedStack(const LinkedStack& originStack) {
     top = nullptr;
 
@@ -65,6 +66,7 @@ LinkedStack& LinkedStack::operator=(const LinkedStack& originStack) {
     return *this;
 }
 
+// Destrutor
 LinkedStack::~LinkedStack() {
     while (top != nullptr) {
         NodeStack* nextNode = top->next;
@@ -73,6 +75,7 @@ LinkedStack::~LinkedStack() {
     }
 }
 
+// Inserindo pedido na pilha
 void LinkedStack::push(const Order& order) {
     NodeStack* newNode = new NodeStack();
     
@@ -83,6 +86,7 @@ void LinkedStack::push(const Order& order) {
     top = newNode;
 }
 
+// Removendo pedido do topo da pilha
 Order LinkedStack::pop() {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
@@ -103,6 +107,7 @@ Order LinkedStack::pop() {
     return orderRemove;
 }
 
+// Retornando pedido do topo da pilha
 Order LinkedStack::peek() const {
     if (isEmpty()) {
         cerr << " # Erro: Pilha vazia!" << endl;
@@ -112,10 +117,12 @@ Order LinkedStack::peek() const {
     return top->data;
 }
 
+// Verificando se a pilha está vazia
 bool LinkedStack::isEmpty() const {
     return top == nullptr;
 }
 
+// Mostrando itens da Pilha
 void LinkedStack::showCounterOrders() const {
     NodeStack* current = top;
 

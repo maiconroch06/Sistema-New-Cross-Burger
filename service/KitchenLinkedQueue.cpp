@@ -226,6 +226,7 @@ void KitchenLinkedQueue::menuOperacoesBalcao() {
     } while (option != 0);
 }
 
+// Carrinho dos Pedidos do Cliente
 void KitchenLinkedQueue::carrinho(const vector<int>& quantatyItems) {
     vector<string> menuNames = {"Cachorro Quente", "Batata Frita", "Hamburguer", "Pizza", "Coca Zero"};
 
@@ -356,6 +357,7 @@ void KitchenLinkedQueue::menuRegisterOrder() {
 }
 
 
+// Remover Pedido do cliente
 void KitchenLinkedQueue::menuRemoveOrder() {
     if (this->isEmpty()) {
         cout << "======================= REMOVER PEDIDO ======================" << endl;
@@ -410,6 +412,7 @@ void KitchenLinkedQueue::menuRemoveOrder() {
     return;
 }
 
+// Buscar Pedido
 void KitchenLinkedQueue::menuSearchOrder() {
     if (this->isEmpty()) {
         cout << "======================= BUSCAR PEDIDO =======================" << endl;
@@ -426,12 +429,12 @@ void KitchenLinkedQueue::menuSearchOrder() {
     cin >> numberOrder;
 
     cout << "================= BUSCAR PEDIDO ================" << endl;
-        if (this->search(numberOrder) == nullptr) {
-            cout << "            # Pedido nao encontrado! #          " << endl;
-            cout << "================================================" << endl;
-            TerminalUtils::pause();
-            return;
-        }
+    if (this->search(numberOrder) == nullptr) {
+        cout << "            # Pedido nao encontrado! #          " << endl;
+        cout << "================================================" << endl;
+        TerminalUtils::pause();
+        return;
+    }
 
     TerminalUtils::clear();
     cout << "=-=-=-=-=-=-=-= BUSCAR  PEDIDO =-=-=-=-=-=-=-=-=" << endl;
@@ -441,6 +444,7 @@ void KitchenLinkedQueue::menuSearchOrder() {
 
 }
 
+// Gerenciando Ações do Pedido
 void KitchenLinkedQueue::menuManageOrder() {
     if (this->isEmpty()) {
         cout << "======================= ACOES DO PEDIDO =====================" << endl;
@@ -504,6 +508,7 @@ void KitchenLinkedQueue::menuManageOrder() {
 
 }
 
+// Adicionando Item no pedido
 void KitchenLinkedQueue::menuAddItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << "======================= ADICIONAR ITEM ======================" << endl;
@@ -575,6 +580,7 @@ void KitchenLinkedQueue::menuAddItem(int numberOrder) {
 
 }
 
+// Removendo Item no pedido
 void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
     if (this->isEmpty()) {
         cout << "======================== REMOVER ITEM =======================" << endl;
@@ -655,6 +661,7 @@ void KitchenLinkedQueue::menuRemoveItem(int numberOrder) {
 
 }
 
+// Enviando peidido realizado para o histórico e pilha
 void KitchenLinkedQueue::prepareOrder(HistoricDoublyLinkedList& historicList) {
     if (this->isEmpty()) {
         cout << " # Fila Vazia! #" << endl;
@@ -669,7 +676,7 @@ void KitchenLinkedQueue::prepareOrder(HistoricDoublyLinkedList& historicList) {
     this->dequeue();
 }
 
-
+// Escolhar mandar o pedido ser preparado
 void KitchenLinkedQueue::menuKitchen(HistoricDoublyLinkedList& historicList) {
     int option;
 
@@ -708,7 +715,7 @@ void KitchenLinkedQueue::menuKitchen(HistoricDoublyLinkedList& historicList) {
     } while (option != 0);
 }
 
-
+// Mostrando os pedidos do balcão
 void KitchenLinkedQueue::menuCounterOrders() {
     int option;
 

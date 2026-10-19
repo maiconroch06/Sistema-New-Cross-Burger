@@ -248,6 +248,7 @@ void HistoricDoublyLinkedList::showOrders() const {
 
 }
 
+// Buscando pedido no histórico
 void HistoricDoublyLinkedList::menuSearchOrder() {
     if (this->isEmpty()) {
         cout << "\n # Historico de pedidos vazio! #" << endl;
@@ -276,6 +277,7 @@ void HistoricDoublyLinkedList::menuSearchOrder() {
     TerminalUtils::pause();
 }
 
+// Removendo pedido pelo seu número
 void HistoricDoublyLinkedList::menuRemoveOrder() {
     int optionRemove, numberOrder;
     
